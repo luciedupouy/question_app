@@ -1,50 +1,35 @@
-from flask import Blueprint, request, jsonify, current_app
 import requests
+from flask import Blueprint, request, jsonify, current_app
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
-def home():
-    return "Hello, Flask!"
-
 @main.route('/submit', methods=['POST'])
 def submit():
-    data = request.json
-
-    redcap_data = {
-        'token': current_app.config['REDCAP_API_TOKEN'],
-        'content': 'record',
-        'format': 'json',
-        'type': 'flat',
-        'data': [data]
+    # Récupérer les données envoyées par le client
+    data = request.json  # Supposons que le front-end envoie les données en format JSON
+    
+    # Exemple: Envoyer les données à REDCap
+    redcap_api_url = current_app.config['REDCAP_API_URL']
+    redcap_api_token = current_app.config['REDCAP_API_TOKEN']
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
     }
+    
+    try:
+        response = requests.post(redcap_api_url, headers=headers, json=data, params={'token': redcap_api_token})
+        response.raise_for_status()  # Lève une exception en cas d'erreur HTTP
+        return jsonify({'message': 'Data submitted successfully to REDCap'}), 200
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
 
-    response = requests.post(
-        current_app.config['REDCAP_API_URL'],
-        data=redcap_data
-    )
-
-    if response.status_code == 200:
-        return jsonify({"status": "success", "message": "Data submitted to REDCap"}), 200
-    else:
-        return jsonify({"status": "error", "message": "Failed to submit data to REDCap"}), 500
-
-@main.route('/results/<record_id>', methods=['GET'])
-def get_results(record_id):
-    redcap_data = {
-        'token': current_app.config['REDCAP_API_TOKEN'],
-        'content': 'record',
-        'format': 'json',
-        'type': 'flat',
-        'records': [record_id]
-    }
-
-    response = requests.post(
-        current_app.config['REDCAP_API_URL'],
-        data=redcap_data
-    )
-
-    if response.status_code == 200:
-        return jsonify(response.json()), 200
-    else:
-        return jsonify({"status": "error", "message": "Failed to fetch data from REDCap"}), 500
+@main.route('/config', methods=['GET'])
+def get_config():
+    redcap_api_url = current_app.config['REDCAP_API_URL']
+    redcap_api_token = current_app.config['REDCAP_API_TOKEN']
+    
+    return jsonify({
+        'redcap_api_url': redcap_api_url,
+        'redcap_api_token': redcap_api_token
+    })
