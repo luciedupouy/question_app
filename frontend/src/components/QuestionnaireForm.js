@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navbar from './NavBar';
 
 function QuestionPage({ userId }) {
     const [questions, setQuestions] = useState([]);
@@ -143,6 +144,7 @@ function QuestionPage({ userId }) {
 
     return (
         <div>
+          <Navbar></Navbar>
           <p> {currentQuestionIndex + 1} / {questions.length}</p>
             <h2>{currentQuestion.field_label}</h2>
             {renderQuestionInput(currentQuestion)}

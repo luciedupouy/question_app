@@ -1,0 +1,23 @@
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/questions');
+  };
+
+  return (
+    <nav >
+      <button onClick={handleBack} >
+        Retour
+      </button>
+      <button >
+        Tuto
+      </button>
+    </nav>
+  );
+};
+
+export default Navbar;
