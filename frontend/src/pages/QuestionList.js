@@ -9,8 +9,8 @@ function QuestionList({ questions, answers, userId }) {
                 {questions.map((question, index) => (
                     <li key={question.field_name}>
                         <Link to={`/question/${userId}/${index}`}>
-                            Question {index + 1}
-                            {answers[question.field_name] && " ✅"}
+                        Question {index + 1}
+                        {answers[question.field_name] && " ✅"}
                         </Link>
                     </li>
                 ))}

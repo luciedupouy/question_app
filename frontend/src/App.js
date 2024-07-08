@@ -29,13 +29,14 @@ function App() {
                     userId ? <QuestionList questions={questions} answers={answers} userId={userId} /> : <Navigate to="/" />
                 } />
                 <Route path="/question/:userId/:questionIndex" element={
-                    <QuestionPage 
+                      <QuestionPage
                         userId={userId}
                         questions={questions}
                         answers={answers}
                         setAnswers={setAnswers}
-                    />
-                } />
+                      />
+                    } 
+                  />
             </Routes>
         </Router>
     );

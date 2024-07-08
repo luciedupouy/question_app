@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './NavBar';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function QuestionPage({ userId }) {
+    const { questionIndex } = useParams();
+    const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
     const [validFields, setValidFields] = useState([]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(parseInt(questionIndex, 10) || 0);
     const [answers, setAnswers] = useState({});
     const [message, setMessage] = useState('');
 
@@ -27,51 +30,55 @@ function QuestionPage({ userId }) {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        setCurrentQuestionIndex(parseInt(questionIndex, 10) || 0);
+    }, [questionIndex]);
+
     const handleAnswerChange = (fieldName, value) => {
-      setAnswers(prev => ({
-          ...prev,
-          [fieldName]: value
-      }));
-  };
+        setAnswers(prev => ({
+            ...prev,
+            [fieldName]: value
+        }));
+    };
 
-  const handleNext = async () => {
-    if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-        try {
-            const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
-                if (validFields.includes(key) && value !== "") {
-                    // Si la valeur est un tableau, la joindre en une chaîne
-                    acc[key] = Array.isArray(value) ? value.join(',') : value;
+    const handleNext = async () => {
+        if (currentQuestionIndex < questions.length - 1) {
+            navigate(`/question/${userId}/${currentQuestionIndex + 1}`);
+        } else {
+            try {
+                const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
+                    if (validFields.includes(key) && value !== "") {
+                        acc[key] = Array.isArray(value) ? value.join(',') : value;
+                    }
+                    return acc;
+                }, {});
+
+                console.log("Données envoyées :", { id: userId, ...validAnswers });
+
+                const response = await axios.post('http://127.0.0.1:5000/update', {
+                    id: userId,
+                    ...validAnswers
+                });
+                console.log("Réponse du serveur :", response.data);
+                setMessage('Toutes les réponses ont été enregistrées avec succès');
+            } catch (error) {
+                console.error('Error submitting answers:', error);
+                if (error.response) {
+                    console.error('Response data:', error.response.data);
+                    console.error('Response status:', error.response.status);
+                    console.error('Response headers:', error.response.headers);
                 }
-                return acc;
-            }, {});
-
-            console.log("Données envoyées :", { id: userId, ...validAnswers });
-
-            const response = await axios.post('http://127.0.0.1:5000/update', {
-                id: userId,
-                ...validAnswers
-            });
-            console.log("Réponse du serveur :", response.data);
-            setMessage('Toutes les réponses ont été enregistrées avec succès');
-        } catch (error) {
-            console.error('Error submitting answers:', error);
-            if (error.response) {
-                console.error('Response data:', error.response.data);
-                console.error('Response status:', error.response.status);
-                console.error('Response headers:', error.response.headers);
+                setMessage('Erreur lors de l\'enregistrement des réponses');
             }
-            setMessage('Erreur lors de l\'enregistrement des réponses');
         }
-    }
-};
+    };
 
     const handlePrevious = () => {
         if (currentQuestionIndex > 0) {
-            setCurrentQuestionIndex(prev => prev - 1);
+            navigate(`/question/${userId}/${currentQuestionIndex - 1}`);
         }
     };
+
 
     const renderQuestionInput = (question) => {
         if (question.field_type === 'radio' || question.field_type === 'dropdown') {
@@ -144,8 +151,8 @@ function QuestionPage({ userId }) {
 
     return (
         <div>
-          <Navbar></Navbar>
-          <p> {currentQuestionIndex + 1} / {questions.length}</p>
+            <Navbar />
+            <p> {currentQuestionIndex + 1} / {questions.length}</p>
             <h2>{currentQuestion.field_label}</h2>
             {renderQuestionInput(currentQuestion)}
             <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Question précédente</button>
@@ -153,7 +160,7 @@ function QuestionPage({ userId }) {
                 {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
             </button>
             {message && <p>{message}</p>}
-            <a href=''>Continuer plus tard</a>
+            <a href='/questions'>Continuer plus tard</a>
         </div>
     );
 }
