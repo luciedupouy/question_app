@@ -80,18 +80,21 @@ function QuestionPage({ userId }) {
             });
 
             return (
-                <select 
-                value={answers[question.field_name] || ''}
-                onChange={(e) => handleAnswerChange(question.field_name, e.target.value)}
-                >
-                    <option value="">Sélectionnez une réponse</option>
-                    {choices.map(choice => (
-                        <option key={choice.value} value={choice.value}>
-                            {choice.label}
-                        </option>
-                    ))}
-                </select>
-            );
+              <div>
+              {choices.map(choice => (
+                  <label key={choice.value}>
+                      <input
+                          type="radio"
+                          name={question.field_name}
+                          value={choice.value}
+                          checked={answers[question.field_name] === choice.value}
+                          onChange={(e) => handleAnswerChange(question.field_name, e.target.value)}
+                      />
+                      {choice.label}
+                  </label>
+              ))}
+          </div>
+      );
         } else if (question.field_type === 'checkbox') {
             const choices = question.select_choices_or_calculations.split('|').map(choice => {
                 const [value, label] = choice.split(',').map(s => s.trim());
@@ -140,14 +143,15 @@ function QuestionPage({ userId }) {
 
     return (
         <div>
+          <p> {currentQuestionIndex + 1} / {questions.length}</p>
             <h2>{currentQuestion.field_label}</h2>
             {renderQuestionInput(currentQuestion)}
-            <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Précédent</button>
+            <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Question précédente</button>
             <button onClick={handleNext}>
-                {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Suivant'}
+                {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
             </button>
             {message && <p>{message}</p>}
-            <p>Question {currentQuestionIndex + 1} sur {questions.length}</p>
+            <a href=''>Continuer plus tard</a>
         </div>
     );
 }
