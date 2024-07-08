@@ -1,35 +1,34 @@
+from flask import Blueprint, request, jsonify
 import requests
-from flask import Blueprint, request, jsonify, current_app
+import json
 
 main = Blueprint('main', __name__)
 
 @main.route('/submit', methods=['POST'])
 def submit():
-    # Récupérer les données envoyées par le client
-    data = request.json  # Supposons que le front-end envoie les données en format JSON
-    
-    # Exemple: Envoyer les données à REDCap
-    redcap_api_url = current_app.config['REDCAP_API_URL']
-    redcap_api_token = current_app.config['REDCAP_API_TOKEN']
-    
-    headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+    data = request.json
+    payload = {
+        'token': '7FEF0B870961D07ED061AE440B1B314C',
+        'content': 'record',
+        'action': 'import',
+        'format': 'json',
+        'type': 'flat',
+        'overwriteBehavior': 'normal',
+        'forceAutoNumber': 'false',
+        'data': json.dumps([{
+            'nom': data.get('nom', ''),
+            'pr_nom': data.get('pr_nom', ''),
+            'mail': data.get('mail', '')
+        }]),
+        'returnContent': 'count',
+        'returnFormat': 'json'
     }
     
-    try:
-        response = requests.post(redcap_api_url, headers=headers, json=data, params={'token': redcap_api_token})
-        response.raise_for_status()  # Lève une exception en cas d'erreur HTTP
-        return jsonify({'message': 'Data submitted successfully to REDCap'}), 200
-    except requests.exceptions.RequestException as e:
-        return jsonify({'error': str(e)}), 500
-
-@main.route('/config', methods=['GET'])
-def get_config():
-    redcap_api_url = current_app.config['REDCAP_API_URL']
-    redcap_api_token = current_app.config['REDCAP_API_TOKEN']
+    response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
     
-    return jsonify({
-        'redcap_api_url': redcap_api_url,
-        'redcap_api_token': redcap_api_token
-    })
+    if response.status_code == 200:
+        return jsonify({"message": "Data submitted successfully"}), 200
+    else:
+        print("Response Status Code:", response.status_code)
+        print("Response Text:", response.text)
+        return jsonify({"error": response.text}), response.status_code
