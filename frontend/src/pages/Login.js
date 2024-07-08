@@ -19,7 +19,7 @@ function Login({ onSuccessfulLogin }) {
             });
             console.log('Data submitted successfully:', response.data);
             onSuccessfulLogin(response.data.id);  // Passer l'ID à App.js
-            navigate('/question');  // Rediriger vers la page des questions
+            navigate('/questions');  // Rediriger vers la page des questions
             // Réinitialiser les champs après une soumission réussie
             setNom('');
             setPrNom('');

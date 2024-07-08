@@ -94,7 +94,7 @@ function QuestionPage({ userId }) {
                   </label>
               ))}
           </div>
-      );
+            );
         } else if (question.field_type === 'checkbox') {
             const choices = question.select_choices_or_calculations.split('|').map(choice => {
                 const [value, label] = choice.split(',').map(s => s.trim());
