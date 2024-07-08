@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
+
+function Login({ onSuccessfulLogin }) {
     const [nom, setNom] = useState('');
     const [prNom, setPrNom] = useState('');
     const [mail, setMail] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -15,6 +18,8 @@ function Login() {
                 mail
             });
             console.log('Data submitted successfully:', response.data);
+            onSuccessfulLogin(response.data.id);  // Passer l'ID à App.js
+            navigate('/question');  // Rediriger vers la page des questions
             // Réinitialiser les champs après une soumission réussie
             setNom('');
             setPrNom('');
