@@ -42,36 +42,39 @@ function QuestionPage({ userId }) {
     };
 
     const handleNext = async () => {
-        if (currentQuestionIndex < questions.length - 1) {
-            navigate(`/question/${userId}/${currentQuestionIndex + 1}`);
-        } else {
-            try {
-                const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
-                    if (validFields.includes(key) && value !== "") {
-                        acc[key] = Array.isArray(value) ? value.join(',') : value;
-                    }
-                    return acc;
-                }, {});
+      if (currentQuestionIndex < questions.length - 1) {
+          navigate(`/question/${userId}/${currentQuestionIndex + 1}`);
+      } else {
+          try {
+              const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
+                  if (validFields.includes(key) && value !== "") {
+                      acc[key] = Array.isArray(value) ? value.join(',') : value;
+                  }
+                  return acc;
+              }, {});
 
-                console.log("Données envoyées :", { id: userId, ...validAnswers });
+              console.log("Données envoyées :", { id: userId, ...validAnswers });
 
-                const response = await axios.post('http://127.0.0.1:5000/update', {
-                    id: userId,
-                    ...validAnswers
-                });
-                console.log("Réponse du serveur :", response.data);
-                setMessage('Toutes les réponses ont été enregistrées avec succès');
-            } catch (error) {
-                console.error('Error submitting answers:', error);
-                if (error.response) {
-                    console.error('Response data:', error.response.data);
-                    console.error('Response status:', error.response.status);
-                    console.error('Response headers:', error.response.headers);
-                }
-                setMessage('Erreur lors de l\'enregistrement des réponses');
-            }
-        }
-    };
+              const response = await axios.post('http://127.0.0.1:5000/update', {
+                  id: userId,
+                  ...validAnswers
+              });
+              console.log("Réponse du serveur :", response.data);
+              setMessage('Toutes les réponses ont été enregistrées avec succès');
+              
+              // Redirection vers LongAnswerPage après l'enregistrement réussi
+              navigate(`/long-answer`);
+          } catch (error) {
+              console.error('Error submitting answers:', error);
+              if (error.response) {
+                  console.error('Response data:', error.response.data);
+                  console.error('Response status:', error.response.status);
+                  console.error('Response headers:', error.response.headers);
+              }
+              setMessage('Erreur lors de l\'enregistrement des réponses');
+          }
+      }
+  };
 
     const handlePrevious = () => {
         if (currentQuestionIndex > 0) {
@@ -150,19 +153,19 @@ function QuestionPage({ userId }) {
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
-        <div>
-            <Navbar />
-            <p> {currentQuestionIndex + 1} / {questions.length}</p>
-            <h2>{currentQuestion.field_label}</h2>
-            {renderQuestionInput(currentQuestion)}
-            <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Question précédente</button>
-            <button onClick={handleNext}>
-                {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
-            </button>
-            {message && <p>{message}</p>}
-            <a href='/questions'>Continuer plus tard</a>
-        </div>
-    );
+      <div>
+          <Navbar />
+          <p> {currentQuestionIndex + 1} / {questions.length}</p>
+          <h2>{currentQuestion.field_label}</h2>
+          {renderQuestionInput(currentQuestion)}
+          <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Question précédente</button>
+          <button onClick={handleNext}>
+              {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
+          </button>
+          {message && <p>{message}</p>}
+          <a href='/questions'>Continuer plus tard</a>
+      </div>
+  );
 }
 
 export default QuestionPage;

@@ -95,6 +95,7 @@ def update():
         return jsonify({"message": "Data updated successfully"}), 200
     else:
         return jsonify({"error": response.text}), response.status_code
+        
 @main.route('/get_questions', methods=['GET'])
 def get_questions():
     payload = {
@@ -139,3 +140,61 @@ def get_valid_fields():
         return jsonify(fields), 200
     else:
         return jsonify({"error": "Impossible de récupérer les champs valides"}), response.status_code
+
+@main.route('/get_long_answer_question', methods=['GET'])
+def get_long_answer_question():
+    payload = {
+        'token': '7FEF0B870961D07ED061AE440B1B314C',
+        'content': 'metadata',
+        'format': 'json',
+        'forms[0]': 'avis_interface',  
+        'returnFormat': 'json'
+    }
+    
+    response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
+    
+    if response.status_code == 200:
+        questions = json.loads(response.text)
+        long_answer_question = next((q for q in questions if q['field_type'] == 'notes'), None)
+        if long_answer_question:
+            return jsonify({
+                'field_name': long_answer_question['field_name'],
+                'field_label': long_answer_question['field_label']
+            }), 200
+        else:
+            return jsonify({"error": "Aucune question à longue réponse trouvée"}), 404
+    else:
+        return jsonify({"error": "Impossible de récupérer la question"}), response.status_code
+
+@main.route('/submit_long_answer', methods=['POST'])
+def submit_long_answer():
+    data = request.json
+    user_id = data.get('id')
+    field_name = data.get('field_name')
+    answer = data.get('answer')
+    
+    if not all([user_id, field_name, answer]):
+        return jsonify({"error": "Données manquantes"}), 400
+
+    payload = {
+        'token': '7FEF0B870961D07ED061AE440B1B314C',
+        'content': 'record',
+        'action': 'import',
+        'format': 'json',
+        'type': 'flat',
+        'overwriteBehavior': 'overwrite',
+        'forceAutoNumber': 'false',
+        'data': json.dumps([{
+            'id': user_id,
+            field_name: answer
+        }]),
+        'returnContent': 'count',
+        'returnFormat': 'json'
+    }
+    
+    response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
+    
+    if response.status_code == 200:
+        return jsonify({"message": "Réponse soumise avec succès"}), 200
+    else:
+        return jsonify({"error": response.text}), response.status_code

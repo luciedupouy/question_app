@@ -4,6 +4,7 @@ import axios from 'axios';
 import Login from './pages/Login';
 import QuestionList from './pages/QuestionList';
 import QuestionPage from './components/QuestionnaireForm';
+import DernierePage from './pages/DernierePage'
 
 function App() {
     const [userId, setUserId] = useState(null);
@@ -37,6 +38,7 @@ function App() {
                       />
                     } 
                   />
+                  <Route path="/long-answer" element={<DernierePage userId={userId} />} />
             </Routes>
         </Router>
     );
