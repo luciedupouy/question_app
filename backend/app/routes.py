@@ -110,7 +110,7 @@ def get_questions():
     if response.status_code == 200:
         questions = json.loads(response.text)
         # Filtrer les métadonnées pour exclure les champs d'identification
-        excluded_fields = ['id', 'nom', 'pr_nom', 'mail']
+        excluded_fields = ['id', 'nom', 'pr_nom', 'mail','avis']
         filtered_questions = [
             {
                 'field_name': q['field_name'],
