@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 function QuestionList({ questions, answers, userId }) {
     // Filtrer les questions pour exclure la question à longue réponse
     const mainQuestions = questions.filter(q => q.field_type !== 'notes');
 
     return (
         <div>
+            <button>Tuto</button>
             <h2>Liste des Questions</h2>
             <ul>
                 {mainQuestions.map((question, index) => (
@@ -18,6 +20,8 @@ function QuestionList({ questions, answers, userId }) {
                     </li>
                 ))}
             </ul>
+            <button><Link to={`/question/${userId}/0`}>Commencer à répondre</Link></button>
+            <a href='/'>Continuer plus tard</a>
         </div>
     );
 }

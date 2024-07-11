@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from '../components/NavBar';
 
 function LongAnswerPage({ userId }) {
     const [question, setQuestion] = useState(null);
@@ -54,6 +53,7 @@ function LongAnswerPage({ userId }) {
                 <button type="submit">Envoyer</button>
             </form>
             {message && <p>{message}</p>}
+            <a href='/'>Se déconnecter</a>
         </div>
     );
 }

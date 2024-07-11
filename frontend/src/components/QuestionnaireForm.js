@@ -163,7 +163,7 @@ function QuestionPage({ userId }) {
               {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
           </button>
           {message && <p>{message}</p>}
-          <a href='/questions'>Continuer plus tard</a>
+          <a href='/'>Continuer plus tard</a>
       </div>
   );
 }
