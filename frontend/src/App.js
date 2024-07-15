@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import QuestionList from './pages/QuestionList';
 import QuestionPage from './components/QuestionnaireForm';
 import DernierePage from './pages/DernierePage'
+import Tuto from './pages/Tuto'
 
 function App() {
     const [userId, setUserId] = useState(null);
@@ -25,6 +26,9 @@ function App() {
             <Routes>
                 <Route path="/" element={
                     userId ? <Navigate to="/questions" /> : <Login onSuccessfulLogin={setUserId} />
+                } />
+                <Route path="/tuto" element={
+                    userId ? <Tuto questions={questions} answers={answers} userId={userId} /> : <Navigate to="/" />
                 } />
                 <Route path="/questions" element={
                     userId ? <QuestionList questions={questions} answers={answers} userId={userId} /> : <Navigate to="/" />
