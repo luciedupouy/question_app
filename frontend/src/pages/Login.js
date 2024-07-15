@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AnswersContext } from '../components/AnswersContext';
 
 
 function Login({ onSuccessfulLogin }) {
+    const { resetAnswers } = useContext(AnswersContext);
     const [nom, setNom] = useState('');
     const [prNom, setPrNom] = useState('');
     const [mail, setMail] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
+        resetAnswers(); 
         event.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/submit', {

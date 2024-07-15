@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Navbar from './NavBar';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AnswersContext } from './AnswersContext';
+
 
 function QuestionPage({ userId }) {
+    const { answers, setAnswers } = useContext(AnswersContext);
     const { questionIndex } = useParams();
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
     const [validFields, setValidFields] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(parseInt(questionIndex, 10) || 0);
-    const [answers, setAnswers] = useState({});
     const [message, setMessage] = useState('');
 
     useEffect(() => {
@@ -36,10 +38,10 @@ function QuestionPage({ userId }) {
 
     const handleAnswerChange = (fieldName, value) => {
         setAnswers(prev => ({
-            ...prev,
-            [fieldName]: value
+          ...prev,
+          [fieldName]: value
         }));
-    };
+      };
 
     const handleNext = async () => {
       if (currentQuestionIndex < questions.length - 1) {
@@ -151,6 +153,8 @@ function QuestionPage({ userId }) {
     if (questions.length === 0) return <div>Chargement des questions...</div>;
 
     const currentQuestion = questions[currentQuestionIndex];
+
+    
 
     return (
       <div>
