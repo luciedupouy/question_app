@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../css/question.css'
+
 
 function LongAnswerPage({ userId }) {
     const [question, setQuestion] = useState(null);
@@ -38,7 +40,7 @@ function LongAnswerPage({ userId }) {
     if (!question) return <div>Chargement de la question...</div>;
 
     return (
-        <div>
+        <div class="centre">
             <h1>Merci pour tes réponses ! Tu as terminé.</h1>
             <h2>{question.field_label}</h2>
             <form onSubmit={handleSubmit}>

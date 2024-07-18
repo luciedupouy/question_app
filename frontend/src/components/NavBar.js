@@ -14,7 +14,9 @@ const Navbar = () => {
         Retour
       </button>
       <button >
+        <Link to={`/tuto/`}>
         Tuto
+        </Link>
       </button>
     </nav>
   );

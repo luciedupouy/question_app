@@ -1,0 +1,124 @@
+body {
+    height: 100%; /* Pleine hauteur pour html et body */
+    margin: 0; /* Supprime les marges par défaut */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.centre {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 95vh;
+    margin: 0px 10px;
+}
+
+.loginButton {
+    background-color: #161A60;
+    color: white;
+    border : none;
+    border-radius: 20px;
+    padding: 12px 100px;
+}
+
+input {
+    padding: 12px 0px;
+    padding-right: 190px;
+    padding-left: 10px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    border-color: #bfbfbf;
+    border-width: thin;
+    box-shadow: none;
+}
+
+a, a:visited {
+    color:black;
+    padding-bottom: 5px;
+}
+
+.lien {
+    color:white;
+    text-decoration: none;
+}
+
+.doubleBouton {
+    display:flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+h1 {
+    margin-bottom: 20%;
+}
+
+.noscroll {
+    min-height: 100vh;
+}
+
+.reponse {
+    display: flex;
+    flex-direction: column; /* Les réponses seront empilées verticalement */
+    margin-top: 40px;
+  }
+  
+  .reponse label {
+    display: block; /* Assurer que chaque label prenne toute la largeur disponible */
+    margin-bottom: 10px; /* Marge inférieure pour espacer les réponses */
+    padding: 5px 0px; /* Ajouter du rembourrage */
+    padding-left: 10px;
+    border: 1px solid #ccc; /* Bordure grise */
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #fff; /* Couleur de fond blanche */
+    width: 98%; /* Prendre toute la largeur disponible */
+    border-radius: 20px;
+    border-color: #bfbfbf;
+    border-width: thin;
+    text-align: left;
+  }
+  
+  .reponse input[type="radio"],
+  .reponse input[type="checkbox"] {
+    margin-right: 10px; /* Espacement entre le bouton et le texte */
+  }
+
+.pButton {
+    color: black;
+    background-color: white;
+    border-width : thin;
+    border-radius: 20px;
+    padding: 12px 28px;
+}
+
+.sButton {
+    background-color: #161A60;
+    color: white;
+    border : none;
+    border-radius: 20px;
+    padding: 12px 40px;
+}
+
+button:disabled {
+    color: white;
+    background-color: white;
+    border: none;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0; /* Couleur de fond de la barre */
+    border-radius: 5px; /* Coins arrondis */
+    overflow: hidden; /* Masquer tout dépassement */
+    margin-bottom: 20px; /* Espacement au-dessous de la barre */
+  }
+  
+  .progress-bar {
+    height: 5px; /* Hauteur de la barre */
+    background-color: #161A60; /* Couleur de la barre de progression */
+    width: 0%; /* Largeur initiale de la barre */
+    transition: width 0.5s ease-in-out; /* Transition pour les changements de largeur */
+    border-radius: 5px 0 0 5px; /* Coins arrondis à gauche */
+  }

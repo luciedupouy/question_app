@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
+import '../css/question.css'
 
 
 function Login({ onSuccessfulLogin }) {
@@ -41,24 +42,27 @@ function Login({ onSuccessfulLogin }) {
     };
 
     return (
-      <div>
-        <h1>Bienvenue !</h1>
-        <h2>S'identifier</h2>
-        <p>Entrez un email pour répondre au questionnaire</p>
-        <form onSubmit={handleSubmit}>
-          <div>
-              <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom'/>
-          </div>
-          <div>
-              <input type="text" value={prNom} onChange={(e) => setPrNom(e.target.value)} placeholder='Prénom'/>
-          </div>
-          <div>
-              <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} placeholder='email@domain.com'/>
-          </div>
-          <button type="submit">S'identifier avec un email</button>
-        </form>
-        <a href=''>Continuer de répondre au questionnaire</a>
-      </div>
+        <div className='noscroll'>
+            <div class="centre">
+                <h1>Bienvenue !</h1>
+                <h2>S'identifier</h2>
+                <p>Entrez un email pour répondre au questionnaire</p>
+                <form onSubmit={handleSubmit}>
+                <div>
+                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom'/>
+                </div>
+                <div>
+                    <input type="text" value={prNom} onChange={(e) => setPrNom(e.target.value)} placeholder='Prénom'/>
+                </div>
+                <div>
+                    <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} placeholder='email@domain.com'/>
+                </div>
+                <button className='loginButton' type="submit">S'identifier avec un email</button>
+                </form>
+            </div>
+            <a href=''>Continuer de répondre au questionnaire</a>
+        </div>
+      
         
     );
 }

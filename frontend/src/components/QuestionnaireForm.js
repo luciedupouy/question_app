@@ -153,21 +153,32 @@ function QuestionPage({ userId }) {
     if (questions.length === 0) return <div>Chargement des questions...</div>;
 
     const currentQuestion = questions[currentQuestionIndex];
+    const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
 
     
 
     return (
       <div>
           <Navbar />
+          <div class="centre">
+          <div className="progress-bar-container">
+                    <div className="progress-bar" style={{ width: `${progressPercentage}%` }}></div>
+                </div>
           <p> {currentQuestionIndex + 1} / {questions.length}</p>
           <h2>{currentQuestion.field_label}</h2>
+          <div className='reponse'>
           {renderQuestionInput(currentQuestion)}
-          <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Question précédente</button>
-          <button onClick={handleNext}>
-              {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
-          </button>
+          </div>
+          <div className='doubleBouton'>
+            <button className='pButton' onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Question précédente</button>
+            <button className='sButton' onClick={handleNext}>
+                {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
+            </button>
+          </div>
           {message && <p>{message}</p>}
+          </div>
           <a href='/'>Continuer plus tard</a>
+
       </div>
   );
 }

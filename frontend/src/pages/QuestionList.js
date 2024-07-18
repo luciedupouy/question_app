@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
+import '../css/question.css'
 
 
 function QuestionList({ questions, userId }) {
@@ -12,6 +13,7 @@ function QuestionList({ questions, userId }) {
     return (
         <div>
             <button>Tuto</button>
+            <div class="centre">
             <h2>Liste des Questions</h2>
             <ul>
                 {mainQuestions.map((question, index) => (
@@ -23,7 +25,8 @@ function QuestionList({ questions, userId }) {
                 </li>
                 ))}
             </ul>
-            <button><Link to={`/question/${userId}/0`}>Commencer à répondre</Link></button>
+            <button className='loginButton'><Link className="lien" to={`/question/${userId}/0`}>Commencer à répondre</Link></button>
+            </div>     
             <a href='/'>Continuer plus tard</a>
         </div>
     );
