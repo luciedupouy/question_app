@@ -40,7 +40,7 @@ a, a:visited {
     padding-bottom: 5px;
 }
 
-.lien {
+.lien, .lien:visited{
     color:white;
     text-decoration: none;
 }
@@ -71,7 +71,6 @@ h1 {
     padding: 5px 0px; /* Ajouter du rembourrage */
     padding-left: 10px;
     border: 1px solid #ccc; /* Bordure grise */
-    border-radius: 5px; /* Coins arrondis */
     background-color: #fff; /* Couleur de fond blanche */
     width: 98%; /* Prendre toute la largeur disponible */
     border-radius: 20px;
@@ -122,3 +121,48 @@ button:disabled {
     transition: width 0.5s ease-in-out; /* Transition pour les changements de largeur */
     border-radius: 5px 0 0 5px; /* Coins arrondis à gauche */
   }
+
+  .element_list {
+    border: 1px solid #ccc; 
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #fff; /* Couleur de fond blanche */
+    width: 95%; /* Prendre toute la largeur disponible */
+    border-radius: 20px;
+    border-color: #bfbfbf;
+    border-width: thin;
+    text-align: left;
+    margin-top: 10px; /* Marge inférieure pour espacer les réponses */
+    padding: 10px 10px; /* Ajouter du rembourrage */
+  }
+
+  .nodeco {
+    text-decoration: none;
+  }
+
+  .espace {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .marge {
+    margin-top: 10px;
+  }
+
+  .textarea {
+    width: 95%;
+    border: 1px solid #ccc;
+    border-radius: 20px; 
+    padding: 10px 10px;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 2px 0px;
+  }
+
+  .nav button {
+    text-decoration: underline;
+    border: none;
+    background-color: white;
+}

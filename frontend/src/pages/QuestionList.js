@@ -12,22 +12,36 @@ function QuestionList({ questions, userId }) {
 
     return (
         <div>
-            <button>Tuto</button>
+            <div className='nav'>
+                <div></div>
+                <div>
+                <button >Tuto</button>
+                </div>
+            </div>
+
             <div class="centre">
             <h2>Liste des Questions</h2>
-            <ul>
-                {mainQuestions.map((question, index) => (
-                <li key={question.field_name}>
-                    <Link to={`/question/${userId}/${index}`}>
-                    Question {index + 1}
-                    {answers[question.field_name] && " ✅"}
-                    </Link>
-                </li>
-                ))}
-            </ul>
             <button className='loginButton'><Link className="lien" to={`/question/${userId}/0`}>Commencer à répondre</Link></button>
-            </div>     
+                {mainQuestions.map((question, index) => (
+                <div  className='element_list' key={question.field_name}>
+                    <Link className='nodeco' to={`/question/${userId}/${index}`}>
+                        <div className='espace'>
+                            <div>                            
+                                Question {index + 1}
+                            </div>
+                            <div>
+                            {answers[question.field_name] && " ✔️"}
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+                ))}
+            
+            
+            </div> 
+            <div className='marge'>
             <a href='/'>Continuer plus tard</a>
+            </div>    
         </div>
     );
 }

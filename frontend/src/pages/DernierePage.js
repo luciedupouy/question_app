@@ -40,23 +40,29 @@ function LongAnswerPage({ userId }) {
     if (!question) return <div>Chargement de la question...</div>;
 
     return (
-        <div class="centre">
-            <h1>Merci pour tes réponses ! Tu as terminé.</h1>
-            <h2>{question.field_label}</h2>
-            <form onSubmit={handleSubmit}>
-                <textarea 
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    rows="10"
-                    cols="50"
-                    placeholder='Commentaires'
-                />
-                <br />
-                <button type="submit">Envoyer</button>
-            </form>
-            {message && <p>{message}</p>}
-            <a href='/'>Se déconnecter</a>
+        <div>
+            <div class="centre">
+                <h1>Merci pour tes réponses ! Tu as terminé.</h1>
+                <h2>{question.field_label}</h2>
+                <form onSubmit={handleSubmit}>
+                    <textarea 
+                        className='textarea'
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                        rows="10"
+                        cols="50"
+                        placeholder='Commentaires'
+                    />
+                    <br />
+                    <button className='loginButton' type="submit">Envoyer</button>
+                </form>
+                {message && <p>{message}</p>}
+            </div>
+            <div>
+                <a href='/'>Se déconnecter</a>
+            </div>
         </div>
+        
     );
 }
 
