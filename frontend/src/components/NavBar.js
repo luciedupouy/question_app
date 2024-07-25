@@ -6,7 +6,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate('/questions');
+    navigate('/form-selection');
   };
 
   return (

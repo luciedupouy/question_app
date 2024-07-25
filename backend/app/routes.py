@@ -96,21 +96,21 @@ def update():
     else:
         return jsonify({"error": response.text}), response.status_code
         
-@main.route('/get_questions', methods=['GET'])
-def get_questions():
+@main.route('/get_questions/<form_name>', methods=['GET'])
+def get_questions(form_name):
     payload = {
         'token': '7FEF0B870961D07ED061AE440B1B314C',
         'content': 'metadata',
         'format': 'json',
+        'forms[0]': form_name,  # Utilisez le nom du formulaire dynamique
         'returnFormat': 'json'
     }
-    
+
     response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
-    
+
     if response.status_code == 200:
         questions = json.loads(response.text)
-        # Filtrer les métadonnées pour exclure les champs d'identification
-        excluded_fields = ['id', 'nom', 'pr_nom', 'mail','avis']
+        excluded_fields = ['id', 'nom', 'pr_nom', 'mail', 'avis']
         filtered_questions = [
             {
                 'field_name': q['field_name'],
@@ -123,7 +123,7 @@ def get_questions():
         return jsonify(filtered_questions), 200
     else:
         return jsonify({"error": "Impossible de récupérer les questions"}), response.status_code
-
+        
 @main.route('/get_valid_fields', methods=['GET'])
 def get_valid_fields():
     payload = {
