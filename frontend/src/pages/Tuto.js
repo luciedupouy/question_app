@@ -10,7 +10,7 @@ function Tuto({ userId }) {
         <div class="centre">
             <h1>Tuto</h1>
             Votre identifiant est le {userId}, gardez le précieusement pour vous identifier la prochaine fois. 
-            <button>
+            <button className='loginButton'>
                 <Link className="lien" to={`/form-selection/`} >
                     Démarrer le questionnaire
                 </Link>

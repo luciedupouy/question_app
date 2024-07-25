@@ -64,7 +64,7 @@ function QuestionPage({ userId }) {
                 setMessage('Toutes les réponses ont été enregistrées avec succès');
                 
                 // Redirection vers LongAnswerPage après l'enregistrement réussi
-                navigate(`/long-answer`);
+                navigate(`/form-selection`);
             } catch (error) {
                 console.error('Error submitting answers:', error);
                 if (error.response) {

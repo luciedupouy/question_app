@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
 import axios from 'axios';
 import '../css/question.css';
+import Navbar from '../components/NavBar';
 
 function QuestionList() {
     const { formName, userId } = useParams();
@@ -19,13 +20,7 @@ function QuestionList() {
 
     return (
         <div>
-            <div className='nav'>
-                <div></div>
-                <div>
-                    <button>Tuto</button>
-                </div>
-            </div>
-
+            <Navbar></Navbar>
             <div className="centre">
                 <h2>Liste des Questions</h2>
                 <button className='loginButton'>
