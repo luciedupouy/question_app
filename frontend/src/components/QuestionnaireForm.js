@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AnswersContext } from './AnswersContext';
 
 function QuestionPage({ userId }) {
-    const { answers, setAnswers } = useContext(AnswersContext);
+    const { answers, setAnswers, completedForms, setCompletedForms } = useContext(AnswersContext);
     const { formName, questionIndex } = useParams();
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
@@ -30,6 +30,13 @@ function QuestionPage({ userId }) {
 
         fetchData();
     }, [formName]);
+
+    useEffect(() => {
+        // Vérifiez si le formulaire est marqué comme complété
+        if (completedForms[formName]) {
+          console.log(`Formulaire ${formName} déjà complété.`);
+        }
+      }, [formName, completedForms]);
 
     useEffect(() => {
         setCurrentQuestionIndex(parseInt(questionIndex, 10) || 0);
@@ -63,7 +70,13 @@ function QuestionPage({ userId }) {
                 console.log("Réponse du serveur :", response.data);
                 setMessage('Toutes les réponses ont été enregistrées avec succès');
                 
-                // Redirection vers LongAnswerPage après l'enregistrement réussi
+                // Marque le formulaire comme complété
+                setCompletedForms(prev => ({
+                    ...prev,
+                    [formName]: true
+                }));
+
+                // Redirection vers form-selection après l'enregistrement réussi
                 navigate(`/form-selection`);
             } catch (error) {
                 console.error('Error submitting answers:', error);

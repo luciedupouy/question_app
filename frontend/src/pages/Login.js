@@ -6,7 +6,7 @@ import '../css/question.css'
 
 
 function Login({ onSuccessfulLogin }) {
-    const { resetAnswers } = useContext(AnswersContext);
+    const { resetAnswers, resetCompletedForms } = useContext(AnswersContext);
     const [nom, setNom] = useState('');
     const [prNom, setPrNom] = useState('');
     const [mail, setMail] = useState('');
@@ -14,6 +14,7 @@ function Login({ onSuccessfulLogin }) {
 
     const handleSubmit = async (event) => {
         resetAnswers(); 
+        resetCompletedForms();
         event.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/submit', {
