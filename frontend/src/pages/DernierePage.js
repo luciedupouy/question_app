@@ -1,12 +1,18 @@
+// src/pages/LongAnswerPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../css/question.css'
+import { useNavigate } from 'react-router-dom'; // Importer useNavigate
+import '../css/question.css';
+import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin
 
-
-function LongAnswerPage({ userId }) {
+function LongAnswerPage({ userId, resetUserId}) {
     const [question, setQuestion] = useState(null);
     const [answer, setAnswer] = useState('');
     const [message, setMessage] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [actionType, setActionType] = useState('');
+    const navigate = useNavigate(); // Initialiser useNavigate
 
     useEffect(() => {
         const fetchQuestion = async () => {
@@ -24,6 +30,12 @@ function LongAnswerPage({ userId }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setModalMessage("Êtes-vous sûr de vouloir soumettre votre réponse ?");
+        setActionType('submit');
+        setShowModal(true);
+    };
+
+    const handleConfirmSubmit = async () => {
         try {
             await axios.post('http://127.0.0.1:5000/submit_long_answer', {
                 id: userId,
@@ -31,10 +43,30 @@ function LongAnswerPage({ userId }) {
                 answer: answer
             });
             setMessage('Réponse soumise avec succès');
+            resetUserId();
+            navigate('/'); // Redirection vers la page de connexion
         } catch (error) {
             console.error('Erreur lors de la soumission de la réponse:', error);
             setMessage('Erreur lors de la soumission de la réponse');
         }
+        setShowModal(false);
+    };
+
+    const handleLogoutClick = (e) => {
+        e.preventDefault();
+        setModalMessage("Êtes-vous sûr de vouloir vous déconnecter ?");
+        setActionType('logout');
+        setShowModal(true);
+    };
+
+    const handleConfirmLogout = () => {
+        resetUserId();
+        navigate('/'); // Redirection vers la page de connexion
+        
+    };
+
+    const handleCancel = () => {
+        setShowModal(false);
     };
 
     if (!question) return <div>Chargement de la question...</div>;
@@ -59,10 +91,15 @@ function LongAnswerPage({ userId }) {
                 {message && <p>{message}</p>}
             </div>
             <div>
-                <a href='/'>Se déconnecter</a>
+                <a href='/' onClick={handleLogoutClick}>Se déconnecter</a>
             </div>
+            <ConfirmationModal
+                show={showModal}
+                message={modalMessage}
+                onConfirm={actionType === 'submit' ? handleConfirmSubmit : handleConfirmLogout}
+                onCancel={handleCancel}
+            />
         </div>
-        
     );
 }
 

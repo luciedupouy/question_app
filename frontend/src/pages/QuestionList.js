@@ -6,7 +6,7 @@ import '../css/question.css';
 import Navbar from '../components/NavBar';
 import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
 
-function QuestionList() {
+function QuestionList({resetUserId}) {
     const { formName, userId } = useParams();
     const { answers, setCompletedForms } = useContext(AnswersContext);
     const [questions, setQuestions] = useState([]);
@@ -59,6 +59,7 @@ function QuestionList() {
                 ...prev,
                 [formName]: true
             }));
+            resetUserId();
 
             // Redirection vers la page d'identification
             navigate('/continuer');

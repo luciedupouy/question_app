@@ -5,7 +5,7 @@ import axios from 'axios';
 import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
 import '../css/question.css';
 
-const FormSelection = ({ userId }) => {
+const FormSelection = ({ userId, resetUserId }) => {
   const { answers, completedForms } = useContext(AnswersContext);
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
@@ -45,7 +45,7 @@ const FormSelection = ({ userId }) => {
       });
       console.log("Réponse du serveur :", response.data);
       setMessage('Toutes les réponses ont été enregistrées avec succès');
-
+      resetUserId();
       navigate('/continuer');
     } catch (error) {
       console.error('Erreur lors de l\'enregistrement des réponses:', error);
@@ -79,7 +79,7 @@ const FormSelection = ({ userId }) => {
       });
       console.log("Réponse du serveur :", response.data);
       setMessage('Formulaire terminé et enregistré avec succès');
-
+      resetUserId();
       navigate('/long-answer');
     } catch (error) {
       console.error('Erreur lors de l\'enregistrement des réponses:', error);

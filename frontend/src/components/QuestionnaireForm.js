@@ -6,7 +6,7 @@ import { AnswersContext } from './AnswersContext';
 import ConfirmationModal from './pop';
 import '../css/question.css';
 
-function QuestionPage({ userId }) {
+function QuestionPage({ userId, resetUserId }) {
   const { answers, setAnswers, completedForms, setCompletedForms } = useContext(AnswersContext);
   const { formName, questionIndex } = useParams();
   const navigate = useNavigate();
@@ -87,7 +87,7 @@ function QuestionPage({ userId }) {
         ...prev,
         [formName]: true
       }));
-
+      resetUserId();
       navigate('/continuer');
     } catch (error) {
       console.error('Error submitting answers:', error);
@@ -123,7 +123,6 @@ function QuestionPage({ userId }) {
         ...prev,
         [formName]: true
       }));
-
       navigate('/form-selection');
     } catch (error) {
       console.error('Error submitting answers:', error);
