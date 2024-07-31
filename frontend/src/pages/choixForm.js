@@ -2,14 +2,30 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
 import axios from 'axios';
+import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
 import '../css/question.css';
 
 const FormSelection = ({ userId }) => {
   const { answers, completedForms } = useContext(AnswersContext);
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalAction, setModalAction] = useState(null);
 
-  const handleSaveAndContinueLater = async () => {
+  const handleSaveAndContinueLater = () => {
+    setModalMessage('Êtes-vous sûr de vouloir continuer plus tard ?');
+    setModalAction(() => saveAndContinueLater);
+    setShowModal(true);
+  };
+
+  const handleFinish = () => {
+    setModalMessage('Avez-vous terminé ?');
+    setModalAction(() => finishForm);
+    setShowModal(true);
+  };
+
+  const saveAndContinueLater = async () => {
     try {
       const validFieldsResponse = await axios.get('http://localhost:5000/get_valid_fields');
       const validFields = validFieldsResponse.data.map(field => field.original_field_name);
@@ -30,7 +46,6 @@ const FormSelection = ({ userId }) => {
       console.log("Réponse du serveur :", response.data);
       setMessage('Toutes les réponses ont été enregistrées avec succès');
 
-      // Redirection vers la page d'identification
       navigate('/continuer');
     } catch (error) {
       console.error('Erreur lors de l\'enregistrement des réponses:', error);
@@ -41,6 +56,41 @@ const FormSelection = ({ userId }) => {
       }
       setMessage('Erreur lors de l\'enregistrement des réponses');
     }
+    setShowModal(false);
+  };
+
+  const finishForm = async () => {
+    try {
+      const validFieldsResponse = await axios.get('http://localhost:5000/get_valid_fields');
+      const validFields = validFieldsResponse.data.map(field => field.original_field_name);
+
+      const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
+        if (validFields.includes(key) && value !== "") {
+          acc[key] = Array.isArray(value) ? value.join(',') : value;
+        }
+        return acc;
+      }, {});
+
+      console.log("Données envoyées :", { id: userId, ...validAnswers });
+
+      const response = await axios.post('http://localhost:5000/update', {
+        id: userId,
+        ...validAnswers
+      });
+      console.log("Réponse du serveur :", response.data);
+      setMessage('Formulaire terminé et enregistré avec succès');
+
+      navigate('/long-answer');
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement des réponses:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      }
+      setMessage('Erreur lors de l\'enregistrement des réponses');
+    }
+    setShowModal(false);
   };
 
   return (
@@ -79,16 +129,24 @@ const FormSelection = ({ userId }) => {
             </Link>
           </button>
           <div className='termine'>
-            <button className='loginButton'>
-              <Link className="lien" to={`/long-answer`}>Terminer</Link>
-            </button>
+            <button className='loginButton' onClick={handleFinish}>Terminer</button>
           </div>
         </div>
       </div>
-      <div >
-        <a href='/' onClick={handleSaveAndContinueLater}>Continuer plus tard</a>
+      <div>
+        <a href='/' onClick={(e) => {
+          e.preventDefault();
+          handleSaveAndContinueLater();
+        }}>Continuer plus tard</a>
       </div>
       {message && <p>{message}</p>}
+
+      <ConfirmationModal
+        show={showModal}
+        message={modalMessage}
+        onConfirm={modalAction}
+        onCancel={() => setShowModal(false)}
+      />
     </div>
   );
 };

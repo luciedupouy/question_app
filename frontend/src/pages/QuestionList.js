@@ -4,14 +4,18 @@ import { AnswersContext } from '../components/AnswersContext';
 import axios from 'axios';
 import '../css/question.css';
 import Navbar from '../components/NavBar';
+import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
 
 function QuestionList() {
     const { formName, userId } = useParams();
     const { answers, setCompletedForms } = useContext(AnswersContext);
     const [questions, setQuestions] = useState([]);
     const [validFields, setValidFields] = useState([]);
-    const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const [message, setMessage] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [modalAction, setModalAction] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -69,9 +73,20 @@ function QuestionList() {
         }
     };
 
+    const openConfirmationModal = (message, action) => {
+        setModalMessage(message);
+        setModalAction(() => action);
+        setShowModal(true);
+    };
+
+    const handleContinueLater = (e) => {
+        e.preventDefault();
+        openConfirmationModal('Êtes-vous sûr de vouloir continuer plus tard ?', handleSaveAndContinueLater);
+    };
+
     return (
         <div>
-            <Navbar></Navbar>
+            <Navbar />
             <div className="centre">
                 <h2>Liste des Questions</h2>
                 <button className='loginButton'>
@@ -91,11 +106,17 @@ function QuestionList() {
                         </Link>
                     </div>
                 ))}
-            </div> 
-            <div className='marge'>
-                <a href='/' onClick={handleSaveAndContinueLater}>Continuer plus tard</a>
+            </div>
+            <div>
+                <a className="marge" href='/' onClick={handleContinueLater}>Continuer plus tard</a>
             </div>
             {message && <p>{message}</p>}
+            <ConfirmationModal
+                show={showModal}
+                message={modalMessage}
+                onConfirm={modalAction}
+                onCancel={() => setShowModal(false)}
+            />
         </div>
     );
 }
