@@ -20,7 +20,7 @@ function App() {
                         userId ? <Navigate to="/tuto" replace /> : <Login onSuccessfulLogin={setUserId} />
                     } />
                     <Route path="/continuer" element={
-                        userId ? <Navigate to="/tuto" replace /> : <Identification onSuccessfulIdentification={setUserId} />
+                        userId ? <Navigate to="/form-selection" replace /> : <Identification onSuccessfulIdentification={setUserId} />
                     } />
                     <Route path="/tuto" element={
                         userId ? <Tuto userId={userId} /> : <Navigate to="/" replace />

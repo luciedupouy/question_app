@@ -49,44 +49,49 @@ function QuestionPage({ userId }) {
         }));
     };
 
+    const handleSaveAndContinueLater = async () => {
+        try {
+            const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
+                if (validFields.includes(key) && value !== "") {
+                    acc[key] = Array.isArray(value) ? value.join(',') : value;
+                }
+                return acc;
+            }, {});
+    
+            console.log("Données envoyées :", { id: userId, ...validAnswers });
+    
+            const response = await axios.post('http://127.0.0.1:5000/update', {
+                id: userId,
+                ...validAnswers
+            });
+            console.log("Réponse du serveur :", response.data);
+            setMessage('Toutes les réponses ont été enregistrées avec succès');
+    
+            // Marque le formulaire comme complété
+            setCompletedForms(prev => ({
+                ...prev,
+                [formName]: true
+            }));
+    
+            // Redirection vers la page d'identification après l'enregistrement
+            navigate('/continuer'); // <-- Mise à jour ici
+        } catch (error) {
+            console.error('Error submitting answers:', error);
+            if (error.response) {
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
+                console.error('Response headers:', error.response.headers);
+            }
+            setMessage('Erreur lors de l\'enregistrement des réponses');
+        }
+    };
+    
+
     const handleNext = async () => {
         if (currentQuestionIndex < questions.length - 1) {
             navigate(`/question/${formName}/${userId}/${currentQuestionIndex + 1}`);
         } else {
-            try {
-                const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
-                    if (validFields.includes(key) && value !== "") {
-                        acc[key] = Array.isArray(value) ? value.join(',') : value;
-                    }
-                    return acc;
-                }, {});
-
-                console.log("Données envoyées :", { id: userId, ...validAnswers });
-
-                const response = await axios.post('http://127.0.0.1:5000/update', {
-                    id: userId,
-                    ...validAnswers
-                });
-                console.log("Réponse du serveur :", response.data);
-                setMessage('Toutes les réponses ont été enregistrées avec succès');
-                
-                // Marque le formulaire comme complété
-                setCompletedForms(prev => ({
-                    ...prev,
-                    [formName]: true
-                }));
-
-                // Redirection vers form-selection après l'enregistrement réussi
-                navigate(`/form-selection`);
-            } catch (error) {
-                console.error('Error submitting answers:', error);
-                if (error.response) {
-                    console.error('Response data:', error.response.data);
-                    console.error('Response status:', error.response.status);
-                    console.error('Response headers:', error.response.headers);
-                }
-                setMessage('Erreur lors de l\'enregistrement des réponses');
-            }
+            await handleSaveAndContinueLater(); // Appel de la fonction pour enregistrer et rediriger
         }
     };
 
@@ -184,9 +189,11 @@ function QuestionPage({ userId }) {
                         {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
                     </button>
                 </div>
-                {message && <p>{message}</p>}
+                
             </div>
-            <a href='/'>Continuer plus tard</a>
+            <div >
+                <a href='/' onClick={handleSaveAndContinueLater}>Continuer plus tard</a>
+            </div>
         </div>
     );
 }
