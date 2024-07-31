@@ -6,6 +6,7 @@ import QuestionPage from './components/QuestionnaireForm';
 import DernierePage from './pages/DernierePage';
 import Tuto from './pages/Tuto';
 import FormSelect from './pages/choixForm';
+import Identification from "./pages/Identification";
 import { AnswersProvider } from './components/AnswersContext';
 
 function App() {
@@ -16,22 +17,25 @@ function App() {
             <AnswersProvider>
                 <Routes>
                     <Route path="/" element={
-                        userId ? <Navigate to="/tuto" /> : <Login onSuccessfulLogin={setUserId} />
+                        userId ? <Navigate to="/tuto" replace /> : <Login onSuccessfulLogin={setUserId} />
+                    } />
+                    <Route path="/continuer" element={
+                        userId ? <Navigate to="/tuto" replace /> : <Identification onSuccessfulIdentification={setUserId} />
                     } />
                     <Route path="/tuto" element={
-                        userId ? <Tuto userId={userId} /> : <Navigate to="/" />
+                        userId ? <Tuto userId={userId} /> : <Navigate to="/" replace />
                     } />
                     <Route path="/form-selection" element={
-                        userId ? <FormSelect userId={userId} /> : <Navigate to="/" />
+                        userId ? <FormSelect userId={userId} /> : <Navigate to="/" replace />
                     } />
                     <Route path="/questions/:formName/:userId" element={
-                        userId ? <QuestionList /> : <Navigate to="/" />
+                        userId ? <QuestionList userId={userId} /> : <Navigate to="/" replace />
                     } />
                     <Route path="/question/:formName/:userId/:questionIndex" element={
-                        userId ? <QuestionPage userId={userId} /> : <Navigate to="/" />
+                        userId ? <QuestionPage userId={userId} /> : <Navigate to="/" replace />
                     } />
                     <Route path="/long-answer" element={
-                        userId ? <DernierePage userId={userId} /> : <Navigate to="/" />
+                        userId ? <DernierePage userId={userId} /> : <Navigate to="/" replace />
                     } />
                 </Routes>
             </AnswersProvider>

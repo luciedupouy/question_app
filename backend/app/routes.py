@@ -198,3 +198,83 @@ def submit_long_answer():
         return jsonify({"message": "Réponse soumise avec succès"}), 200
     else:
         return jsonify({"error": response.text}), response.status_code
+
+@main.route('/get_answers/<user_id>', methods=['GET'])
+def get_answers(user_id):
+    payload = {
+        'token': '7FEF0B870961D07ED061AE440B1B314C',
+        'content': 'record',
+        'action': 'export',
+        'format': 'json',
+        'type': 'flat',
+        'records': [user_id],
+        'returnFormat': 'json'
+    }
+    
+    response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
+    
+    if response.status_code == 200:
+        answers = json.loads(response.text)
+        return jsonify(answers), 200
+    else:
+        return jsonify({"error": response.text}), response.status_code
+
+
+@main.route('/check_identity', methods=['POST'])
+def check_identity():
+    print("Received check_identity request")
+    try:
+        data = request.json
+        print("Received data:", data)
+        
+        if not data:
+            print("No data received")
+            return jsonify({'error': 'Aucune donnée reçue'}), 400
+        
+        email = data.get('email')
+        user_id = data.get('id')
+        
+        print(f"Extracted email: {email}, id: {user_id}")
+        
+        if not email or not user_id:
+            print("Missing email or ID")
+            return jsonify({'error': 'Email ou ID manquant'}), 400
+
+        # Normalisation des données
+        email = email.lower().strip()
+        user_id = str(user_id).strip()
+
+        # Récupération des données de REDCap
+        payload = {
+            'token': '7FEF0B870961D07ED061AE440B1B314C',
+            'content': 'record',
+            'action': 'export',
+            'format': 'json',
+            'type': 'flat',
+            'records[0]': user_id,
+            'fields[0]': 'id',
+            'fields[1]': 'mail',
+            'returnFormat': 'json'
+        }
+        
+        response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
+        print("REDCap API response:", response.text)
+        print("REDCap API status code:", response.status_code)
+        
+        if response.status_code == 200:
+            records = json.loads(response.text)
+            if records:
+                record = records[0]
+                if record['id'] == user_id and record['mail'].lower().strip() == email:
+                    print("Identity verified")
+                    return jsonify({'message': 'Identité vérifiée'}), 200
+            
+            print("No matching record found")
+            return jsonify({'error': 'Identité non valide'}), 400
+
+        print(f"Error retrieving data from REDCap. Status code: {response.status_code}")
+        return jsonify({'error': 'Erreur lors de la récupération des données depuis REDCap'}), response.status_code
+
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
+        return jsonify({'error': f'Erreur interne du serveur: {str(e)}'}), 500

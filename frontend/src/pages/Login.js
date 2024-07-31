@@ -60,7 +60,7 @@ function Login({ onSuccessfulLogin }) {
                 <button className='loginButton' type="submit">S'identifier avec un email</button>
                 </form>
             </div>
-            <a href=''>Continuer de répondre au questionnaire</a>
+            <a href='/continuer'>Continuer de répondre au questionnaire</a>
         </div>
       
         
