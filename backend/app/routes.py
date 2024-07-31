@@ -201,23 +201,42 @@ def submit_long_answer():
 
 @main.route('/get_answers/<user_id>', methods=['GET'])
 def get_answers(user_id):
+    print(f"Attempting to get answers for user ID: {user_id}")
+    
     payload = {
         'token': '7FEF0B870961D07ED061AE440B1B314C',
         'content': 'record',
         'action': 'export',
         'format': 'json',
         'type': 'flat',
-        'records': [user_id],
+        'records[0]': user_id,
         'returnFormat': 'json'
     }
     
-    response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
+    try:
+        response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
+        print(f"REDCap API response status: {response.status_code}")
+        
+        if response.status_code == 200:
+            answers = json.loads(response.text)
+            print(f"Retrieved answers: {answers}")
+            
+            if not answers:
+                print("No answers found for this user ID")
+                return jsonify({"error": "Aucune réponse trouvée pour cet utilisateur"}), 404
+            
+            # Filtrer les champs non vides
+            filtered_answers = {k: v for k, v in answers[0].items() if v}
+            print(f"Filtered answers: {filtered_answers}")
+            
+            return jsonify(filtered_answers), 200
+        else:
+            print(f"Error response from REDCap: {response.text}")
+            return jsonify({"error": f"Erreur lors de la récupération des données: {response.text}"}), response.status_code
     
-    if response.status_code == 200:
-        answers = json.loads(response.text)
-        return jsonify(answers), 200
-    else:
-        return jsonify({"error": response.text}), response.status_code
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
+        return jsonify({"error": f"Erreur interne du serveur: {str(e)}"}), 500
 
 
 @main.route('/check_identity', methods=['POST'])

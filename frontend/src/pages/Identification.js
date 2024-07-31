@@ -14,16 +14,32 @@ function Identification({ onSuccessfulIdentification }) {
     resetAnswers();
     resetCompletedForms();
     setError('');
-
+  
     try {
       console.log('Sending data:', { email, id });
       const checkResponse = await axios.post('http://127.0.0.1:5000/check_identity', { email, id });
       
       if (checkResponse.status === 200) {
-        // Récupérer les réponses
-        const answersResponse = await axios.get(`http://127.0.0.1:5000/get_answers/${id}`);
-        setAnswers(answersResponse.data);
-        onSuccessfulIdentification(id); // Signaler l'identification réussie
+        console.log('Identity verified, fetching answers');
+        try {
+          const answersResponse = await axios.get(`http://127.0.0.1:5000/get_answers/${id}`);
+          console.log('Answers received:', answersResponse.data);
+          if (Object.keys(answersResponse.data).length > 0) {
+            setAnswers(answersResponse.data);
+            console.log('Answers set in context');
+          } else {
+            console.log('No previous answers found');
+          }
+          onSuccessfulIdentification(id);
+        } catch (answerError) {
+          console.error('Error fetching answers:', answerError);
+          if (answerError.response && answerError.response.status === 404) {
+            console.log('No previous answers found (404 response)');
+            // Vous pouvez choisir de ne rien faire ici, ou d'afficher un message
+          } else {
+            setError('Erreur lors de la récupération des réponses précédentes');
+          }
+        }
       }
     } catch (err) {
       console.error('Full error object:', err);
