@@ -41,7 +41,7 @@ function LongAnswerPage({ userId }) {
 
     return (
         <div>
-            <div class="centre">
+            <div className="centre">
                 <h1>Merci pour tes réponses ! Tu as terminé.</h1>
                 <h2>{question.field_label}</h2>
                 <form onSubmit={handleSubmit}>

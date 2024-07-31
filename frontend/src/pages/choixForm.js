@@ -20,36 +20,37 @@ const FormSelection = ({ userId }) => {
           <button className='element_list'>
             <Link className='nodeco' to={`/questions/Form1/${userId}`}>
                 <div className='espace'>
-                <div>
-                    Questionnaire 1
-                </div>
-                <div>
-                    {completedForms.Form1 && <span> ✔️</span>}
-                </div>
-                </div>
-                
+                    <div>
+                        Questionnaire 1
+                    </div>
+                    <div>
+                        {completedForms.Form1 && <span> ✔️</span>}
+                    </div>
+                </div>        
             </Link>
           </button>
           <button className='element_list'>
             <Link className='nodeco' to={`/questions/Form2/${userId}`}>
                 <div className='espace'>
-                <div>
-                    Questionnaire 2
-                </div>
-                <div>
-                    {completedForms.Form2 && <span> ✔️</span>}
-                </div>
-                </div>
-                
+                    <div>
+                        Questionnaire 2
+                    </div>
+                    <div>
+                        {completedForms.Form2 && <span> ✔️</span>}
+                    </div>
+                </div>   
             </Link>
           </button>
+            <div className='termine'>
+                <button className='loginButton'>
+                    <Link className="lien" to={`/long-answer`}>Terminer</Link>
+                </button>
+            </div>
         </div>
-        <div className='termine'>
-          <button className='loginButton'>
-            <Link className="lien" to={`/long-answer`}>Terminer</Link>
-          </button>
         </div>
-      </div>
+            <div>
+                <a href='/'>Continuer plus tard</a>
+            </div>  
     </div>
   );
 };

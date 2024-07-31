@@ -23,9 +23,8 @@ function Login({ onSuccessfulLogin }) {
                 mail
             });
             console.log('Data submitted successfully:', response.data);
-            onSuccessfulLogin(response.data.id);  // Passer l'ID à App.js
-            navigate('/tuto');  // Rediriger vers la page des questions
-            // Réinitialiser les champs après une soumission réussie
+            onSuccessfulLogin(response.data.id);  
+            navigate('/tuto');  
             setNom('');
             setPrNom('');
             setMail('');
@@ -44,7 +43,7 @@ function Login({ onSuccessfulLogin }) {
 
     return (
         <div className='noscroll'>
-            <div class="centre">
+            <div className="centre">
                 <h1>Bienvenue !</h1>
                 <h2>S'identifier</h2>
                 <p>Entrez un email pour répondre au questionnaire</p>
