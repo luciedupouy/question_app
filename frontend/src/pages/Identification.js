@@ -85,7 +85,7 @@ function Identification({ onSuccessfulIdentification }) {
           <button className='loginButton' type="submit">S'identifier avec un email</button>
         </form>
       </div>
-      <a href='/continuer'>Continuer de répondre au questionnaire</a>
+      <a href='/'>Créer un compte</a>
     </div>
   );
 }

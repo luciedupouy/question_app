@@ -123,6 +123,7 @@ function QuestionPage({ userId, resetUserId }) {
         ...prev,
         [formName]: true
       }));
+      resetUserId();
       navigate('/form-selection');
     } catch (error) {
       console.error('Error submitting answers:', error);

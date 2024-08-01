@@ -39,7 +39,7 @@ function App() {
               userId ? <QuestionPage userId={userId} resetUserId={resetUserId} /> : <Navigate to="/" replace />
             } />
             <Route path="/long-answer" element={
-              userId ? <DernierePage userId={userId} resetUserId={resetUserId}/> : <Navigate to="/" replace />
+              userId ? <DernierePage userId={userId} /> : <Navigate to="/" replace />
             } />
           </Routes>
         </AnswersProvider>
