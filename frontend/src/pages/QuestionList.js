@@ -6,7 +6,7 @@ import '../css/question.css';
 import Navbar from '../components/NavBar';
 import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
 
-function QuestionList({resetUserId}) {
+function QuestionList({resetUserId, language}) {
     const { formName, userId } = useParams();
     const { answers, setCompletedForms } = useContext(AnswersContext);
     const [questions, setQuestions] = useState([]);
@@ -21,7 +21,7 @@ function QuestionList({resetUserId}) {
         const fetchData = async () => {
             try {
                 const [questionsResponse, fieldsResponse] = await Promise.all([
-                    axios.get(`http://localhost:5000/get_questions/${formName}`),
+                    axios.get(`http://localhost:5000/get_questions/${formName}?lang=${language}`),
                     axios.get('http://localhost:5000/get_valid_fields')
                 ]);
                 setQuestions(questionsResponse.data);
@@ -32,7 +32,7 @@ function QuestionList({resetUserId}) {
         };
 
         fetchData();
-    }, [formName]);
+    }, [formName, language]);
 
     const mainQuestions = questions.filter(q => q.field_type !== 'notes');
 
@@ -88,7 +88,7 @@ function QuestionList({resetUserId}) {
     return (
         <div>
             <Navbar />
-            <div className="centre">
+            <div className="centre2">
                 <h2>Liste des Questions</h2>
                 <button className='loginButton'>
                     <Link className="lien" to={`/question/${formName}/${userId}/0`}>Commencer à répondre</Link>

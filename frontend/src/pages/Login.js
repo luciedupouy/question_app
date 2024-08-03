@@ -2,10 +2,11 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
+import LanguageSelector from '../components/LangageSelector';
 import '../css/question.css'
 
 
-function Login({ onSuccessfulLogin }) {
+function Login({ onSuccessfulLogin, language, setLanguage }) {
     const { resetAnswers, resetCompletedForms } = useContext(AnswersContext);
     const [nom, setNom] = useState('');
     const [prNom, setPrNom] = useState('');
@@ -49,13 +50,13 @@ function Login({ onSuccessfulLogin }) {
                 <p>Entrez un email pour répondre au questionnaire</p>
                 <form onSubmit={handleSubmit}>
                 <div>
-                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom' required/>
+                    <input className='input' type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom' required/>
                 </div>
                 <div>
-                    <input type="text" value={prNom} onChange={(e) => setPrNom(e.target.value)} placeholder='Prénom' required/>
+                    <input className='input' type="text" value={prNom} onChange={(e) => setPrNom(e.target.value)} placeholder='Prénom' required/>
                 </div>
                 <div>
-                    <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} placeholder='email@domain.com' required/>
+                    <input className='input' type="email" value={mail} onChange={(e) => setMail(e.target.value)} placeholder='email@domain.com' required/>
                 </div>
                 <button className='loginButton' type="submit">S'identifier avec un email</button>
                 </form>

@@ -1,7 +1,7 @@
 body {
     height: 100%; /* Pleine hauteur pour html et body */
     margin: 0; /* Supprime les marges par défaut */
-    display: flex;
+
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -12,8 +12,17 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 95vh;
+    min-height: 92vh;
     margin: 0px 10px;
+}
+
+.centre2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 92vh;
+  margin: 0px 10px;
+  align-items: center;
 }
 
 .loginButton {
@@ -21,18 +30,28 @@ body {
     color: white;
     border : none;
     border-radius: 20px;
-    padding: 12px 100px;
+    padding: 12px 0px;
+    width: 80%;
 }
 
-input {
+.input {
     padding: 12px 0px;
-    padding-right: 190px;
     padding-left: 10px;
     margin-bottom: 15px;
     border-radius: 20px;
     border-color: #bfbfbf;
     border-width: thin;
     box-shadow: none;
+    width: 80%;
+}
+input {
+  padding: 12px 0px;
+  padding-left: 10px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  border-color: #bfbfbf;
+  border-width: thin;
+  box-shadow: none;
 }
 
 a, a:visited {
@@ -52,7 +71,7 @@ a, a:visited {
 }
 
 h1 {
-    margin-bottom: 20%;
+    margin-bottom: 100px;
 }
 
 .noscroll {
@@ -89,7 +108,8 @@ h1 {
     background-color: white;
     border-width : thin;
     border-radius: 20px;
-    padding: 12px 28px;
+    width: 50%;
+    padding: 12px 0px; 
 }
 
 .sButton {
@@ -97,7 +117,7 @@ h1 {
     color: white;
     border : none;
     border-radius: 20px;
-    padding: 12px 40px;
+    width: 50%;
 }
 
 button:disabled {
@@ -126,7 +146,7 @@ button:disabled {
     border: 1px solid #ccc; 
     border-radius: 5px; /* Coins arrondis */
     background-color: #fff; /* Couleur de fond blanche */
-    width: 95%; /* Prendre toute la largeur disponible */
+    width: 80%; /* Prendre toute la largeur disponible */
     border-radius: 20px;
     border-color: #bfbfbf;
     border-width: thin;
@@ -149,7 +169,7 @@ button:disabled {
   }
 
   .textarea {
-    width: 95%;
+    width: 80%;
     border: 1px solid #ccc;
     border-radius: 20px; 
     padding: 10px 10px;
@@ -188,6 +208,7 @@ button:disabled {
     padding: 20px;
     border-radius: 25px;
     text-align: center;
+    width: 50%;
   }
   
   .modal-buttons {

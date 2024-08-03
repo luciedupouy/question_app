@@ -79,7 +79,6 @@ const FormSelection = ({ userId, resetUserId }) => {
       });
       console.log("Réponse du serveur :", response.data);
       setMessage('Formulaire terminé et enregistré avec succès');
-      resetUserId();
       navigate('/long-answer');
     } catch (error) {
       console.error('Erreur lors de l\'enregistrement des réponses:', error);

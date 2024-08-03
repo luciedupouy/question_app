@@ -1,9 +1,10 @@
 import React from 'react';
 
 const LanguageSelector = ({ language, setLanguage }) => {
-  const handleLanguageChange = (lang) => {
-    setLanguage(lang); // Met à jour l'état de la langue dans le composant parent
-  };
+    const handleLanguageChange = (lang) => {
+        setLanguage(lang);
+        console.log("Language changed to:", lang); // Ajoutez ce log pour déboguer
+      };
 
   return (
     <div>

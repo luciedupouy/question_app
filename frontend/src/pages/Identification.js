@@ -2,8 +2,9 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AnswersContext } from '../components/AnswersContext';
 import '../css/question.css';
+import LanguageSelector from '../components/LangageSelector';
 
-function Identification({ onSuccessfulIdentification }) {
+function Identification({ onSuccessfulIdentification, language, setLanguage }) {
   const { resetAnswers, resetCompletedForms, setAnswers } = useContext(AnswersContext);
   const [email, setEmail] = useState('');
   const [id, setId] = useState('');
@@ -65,6 +66,7 @@ function Identification({ onSuccessfulIdentification }) {
         <form onSubmit={handleSubmit}>
           <div>
             <input
+            className='input'
               type="email"
               placeholder="email@domain.com"
               value={email}
@@ -74,6 +76,7 @@ function Identification({ onSuccessfulIdentification }) {
           </div>
           <div>
             <input
+            className='input'
               type="number"
               placeholder="Identifiant"
               value={id}
