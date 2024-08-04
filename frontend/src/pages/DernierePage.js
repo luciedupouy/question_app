@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../components/LangContext'; // Importez le contexte de langue
+import { translationsLongAnswerPage } from '../translations/translationDernier'; // Importez les traductions spécifiques à LongAnswerPage
 import '../css/question.css';
 import ConfirmationModal from '../components/pop'; 
 
-function LongAnswerPage({ userId, resetUserId}) {
+function LongAnswerPage({ userId, resetUserId }) {
+    const { language } = useLanguage(); // Utilisez le contexte de langue
+    const texts = translationsLongAnswerPage[language]; // Obtenez les textes pour la page LongAnswerPage
     const [question, setQuestion] = useState(null);
     const [answer, setAnswer] = useState('');
     const [message, setMessage] = useState('');
@@ -20,16 +24,16 @@ function LongAnswerPage({ userId, resetUserId}) {
                 setQuestion(response.data);
             } catch (error) {
                 console.error('Erreur lors de la récupération de la question:', error);
-                setMessage('Erreur lors du chargement de la question');
+                setMessage(texts.fetchError);
             }
         };
 
         fetchQuestion();
-    }, []);
+    }, [texts.fetchError]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setModalMessage("Êtes-vous sûr de vouloir soumettre votre réponse ?");
+        setModalMessage(texts.submitConfirmation);
         setActionType('submit');
         setShowModal(true);
     };
@@ -41,19 +45,19 @@ function LongAnswerPage({ userId, resetUserId}) {
                 field_name: question.field_name,
                 answer: answer
             });
-            setMessage('Réponse soumise avec succès');
+            setMessage(texts.submitSuccess);
             resetUserId();
             navigate('/'); // Redirection vers la page de connexion
         } catch (error) {
             console.error('Erreur lors de la soumission de la réponse:', error);
-            setMessage('Erreur lors de la soumission de la réponse');
+            setMessage(texts.submitError);
         }
         setShowModal(false);
     };
 
     const handleLogoutClick = (e) => {
         e.preventDefault();
-        setModalMessage("Êtes-vous sûr de vouloir vous déconnecter ?");
+        setModalMessage(texts.logoutConfirmation);
         setActionType('logout');
         setShowModal(true);
     };
@@ -61,20 +65,19 @@ function LongAnswerPage({ userId, resetUserId}) {
     const handleConfirmLogout = () => {
         resetUserId();
         navigate('/'); // Redirection vers la page de connexion
-        
     };
 
     const handleCancel = () => {
         setShowModal(false);
     };
 
-    if (!question) return <div>Chargement de la question...</div>;
+    if (!question) return <div>{texts.loadingQuestion}</div>;
 
     return (
         <div>
             <div className="centre">
-                <h1>Merci pour tes réponses ! Tu as terminé.</h1>
-                <h2>{question.field_label}</h2>
+                <h1>{texts.thankYou}</h1>
+                <h2>{texts.question}</h2>
                 <form onSubmit={handleSubmit}>
                     <textarea 
                         className='textarea'
@@ -82,15 +85,15 @@ function LongAnswerPage({ userId, resetUserId}) {
                         onChange={(e) => setAnswer(e.target.value)}
                         rows="10"
                         cols="50"
-                        placeholder='Commentaires'
+                        placeholder={texts.placeholder}
                     />
                     <br />
-                    <button className='loginButton' type="submit">Envoyer</button>
+                    <button className='loginButton' type="submit">{texts.submit}</button>
                 </form>
                 {message && <p>{message}</p>}
             </div>
             <div>
-                <a href='/' onClick={handleLogoutClick}>Se déconnecter</a>
+                <a href='/' onClick={handleLogoutClick}>{texts.logout}</a>
             </div>
             <ConfirmationModal
                 show={showModal}

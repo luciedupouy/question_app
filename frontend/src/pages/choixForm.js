@@ -1,26 +1,39 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
+import { useLanguage } from '../components/LangContext'; // Importez le contexte de langue
 import axios from 'axios';
 import ConfirmationModal from '../components/pop'; 
+import { translationsFormSelection } from '../translations/translationChoix'; // Importez les traductions spécifiques à FormSelection
 import '../css/question.css';
 
 const FormSelection = ({ userId, resetUserId }) => {
   const { answers, completedForms } = useContext(AnswersContext);
+  const { language } = useLanguage(); // Utilisez le contexte de langue
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalAction, setModalAction] = useState(null);
 
+  const texts = translationsFormSelection[language]; // Obtenez les textes pour la page FormSelection
+
+  const getFormNames = () => {
+    if (language === 'fr') {
+      return ['Form1', 'Form2'];
+    } else {
+      return ['Form1E', 'Form2E'];
+    }
+  };
+
   const handleSaveAndContinueLater = () => {
-    setModalMessage('Êtes-vous sûr de vouloir continuer plus tard ?');
+    setModalMessage(texts.saveAndContinueLater);
     setModalAction(() => saveAndContinueLater);
     setShowModal(true);
   };
 
   const handleFinish = () => {
-    setModalMessage('Avez-vous terminé ?');
+    setModalMessage(texts.finish);
     setModalAction(() => finishForm);
     setShowModal(true);
   };
@@ -101,34 +114,24 @@ const FormSelection = ({ userId, resetUserId }) => {
         </div>
       </div>
       <div className="centre">
-        <h2>Choisis un formulaire</h2>
+        <h2>{texts.chooseForm}</h2>
         <div>
-          <button className='element_list'>
-            <Link className='nodeco' to={`/questions/Form1/${userId}`}>
-              <div className='espace'>
-                <div>
-                  Questionnaire 1
+          {getFormNames().map((formName, index) => (
+            <button key={formName} className='element_list'>
+              <Link className='nodeco' to={`/questions/${formName}/${userId}`}>
+                <div className='espace'>
+                  <div>
+                    {texts.formLabel} {index + 1}
+                  </div>
+                  <div>
+                    {completedForms[formName] && <span> {texts.finishedForm}</span>}
+                  </div>
                 </div>
-                <div>
-                  {completedForms.Form1 && <span> ✔️</span>}
-                </div>
-              </div>
-            </Link>
-          </button>
-          <button className='element_list'>
-            <Link className='nodeco' to={`/questions/Form2/${userId}`}>
-              <div className='espace'>
-                <div>
-                  Questionnaire 2
-                </div>
-                <div>
-                  {completedForms.Form2 && <span> ✔️</span>}
-                </div>
-              </div>
-            </Link>
-          </button>
+              </Link>
+            </button>
+          ))}
           <div className='termine'>
-            <button className='loginButton' onClick={handleFinish}>Terminer</button>
+            <button className='loginButton' onClick={handleFinish}>{texts.finish}</button>
           </div>
         </div>
       </div>
@@ -136,7 +139,7 @@ const FormSelection = ({ userId, resetUserId }) => {
         <a href='/' onClick={(e) => {
           e.preventDefault();
           handleSaveAndContinueLater();
-        }}>Continuer plus tard</a>
+        }}>{texts.saveAndContinueLater}</a>
       </div>
       {message && <p>{message}</p>}
 

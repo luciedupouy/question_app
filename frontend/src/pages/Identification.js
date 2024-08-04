@@ -1,10 +1,14 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AnswersContext } from '../components/AnswersContext';
+import { useLanguage } from '../components/LangContext'; // Importez le contexte de langue
+import { translationsId } from '../translations/translationId'; // Importez les traductions spécifiques à Identification
 import '../css/question.css';
+import LanguageSelector from '../components/LangageSelector';
 
 function Identification({ onSuccessfulIdentification }) {
   const { resetAnswers, resetCompletedForms, setAnswers } = useContext(AnswersContext);
+  const { language } = useLanguage(); // Utilisez le contexte de langue
   const [email, setEmail] = useState('');
   const [id, setId] = useState('');
   const [error, setError] = useState('');
@@ -35,9 +39,8 @@ function Identification({ onSuccessfulIdentification }) {
           console.error('Error fetching answers:', answerError);
           if (answerError.response && answerError.response.status === 404) {
             console.log('No previous answers found (404 response)');
-            // Vous pouvez choisir de ne rien faire ici, ou d'afficher un message
           } else {
-            setError('Erreur lors de la récupération des réponses précédentes');
+            setError('Error fetching previous answers');
           }
         }
       }
@@ -45,29 +48,32 @@ function Identification({ onSuccessfulIdentification }) {
       console.error('Full error object:', err);
       if (err.response) {
         console.error('Error response:', err.response.data);
-        setError(err.response.data.error || 'Une erreur s\'est produite lors de la vérification de l\'identité');
+        setError(err.response.data.error || 'An error occurred while verifying identity');
       } else if (err.request) {
         console.error('Error request:', err.request);
-        setError('Impossible de contacter le serveur. Vérifiez votre connexion internet.');
+        setError('Unable to contact the server. Check your internet connection.');
       } else {
         console.error('Error message:', err.message);
-        setError('Une erreur inattendue s\'est produite. Veuillez réessayer.');
+        setError('An unexpected error occurred. Please try again.');
       }
     }
   };
 
+  const texts = translationsId[language]; // Obtenez les textes pour la page Identification
+
   return (
     <div className='noscroll'>
+      <LanguageSelector />
       <div className="centre">
-        <h1>Tu es de retour !</h1>
-        <h2>S'identifier</h2>
-        <p>Entre ton identifiant pour te connecter</p>
+        <h1>{texts.welcomeBack}</h1>
+        <h2>{texts.signIn}</h2>
+        <p>{texts.enterId}</p>
         <form onSubmit={handleSubmit}>
           <div>
             <input
-            className='input'
+              className='input'
               type="email"
-              placeholder="email@domain.com"
+              placeholder={texts.emailPlaceholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -75,19 +81,19 @@ function Identification({ onSuccessfulIdentification }) {
           </div>
           <div>
             <input
-            className='input'
+              className='input'
               type="number"
-              placeholder="Identifiant"
+              placeholder={texts.idPlaceholder}
               value={id}
               onChange={(e) => setId(e.target.value)}
               required
             />
           </div>
           {error && <p className="error">{error}</p>}
-          <button className='loginButton' type="submit">S'identifier avec un email</button>
+          <button className='loginButton' type="submit">{texts.signInButton}</button>
         </form>
       </div>
-      <a href='/'>Créer un compte</a>
+      <a href='/'>{texts.createAccountLink}</a>
     </div>
   );
 }

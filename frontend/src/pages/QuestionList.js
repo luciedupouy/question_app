@@ -5,10 +5,14 @@ import axios from 'axios';
 import '../css/question.css';
 import Navbar from '../components/NavBar';
 import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
+import { useLanguage } from '../components/LangContext'; // Importez le contexte de langue
+import { translationsQuestionList } from '../translations/translationList'; // Importez les traductions spécifiques à QuestionList
 
-function QuestionList({resetUserId}) {
+function QuestionList({ resetUserId }) {
     const { formName, userId } = useParams();
     const { answers, setCompletedForms } = useContext(AnswersContext);
+    const { language } = useLanguage(); // Utilisez le contexte de langue
+    const texts = translationsQuestionList[language]; // Obtenez les textes pour la page QuestionList
     const [questions, setQuestions] = useState([]);
     const [validFields, setValidFields] = useState([]);
     const navigate = useNavigate();
@@ -52,7 +56,7 @@ function QuestionList({resetUserId}) {
                 ...validAnswers
             });
             console.log("Réponse du serveur :", response.data);
-            setMessage('Toutes les réponses ont été enregistrées avec succès');
+            setMessage(texts.saveSuccess);
 
             // Marque le formulaire comme complété
             setCompletedForms(prev => ({
@@ -70,7 +74,7 @@ function QuestionList({resetUserId}) {
                 console.error('Response status:', error.response.status);
                 console.error('Response headers:', error.response.headers);
             }
-            setMessage('Erreur lors de l\'enregistrement des réponses');
+            setMessage(texts.saveError);
         }
     };
 
@@ -82,16 +86,16 @@ function QuestionList({resetUserId}) {
 
     const handleContinueLater = (e) => {
         e.preventDefault();
-        openConfirmationModal('Êtes-vous sûr de vouloir continuer plus tard ?', handleSaveAndContinueLater);
+        openConfirmationModal(texts.continueLaterConfirmation, handleSaveAndContinueLater);
     };
 
     return (
         <div>
             <Navbar />
             <div className="centre2">
-                <h2>Liste des Questions</h2>
+                <h2>{texts.title}</h2>
                 <button className='loginButton'>
-                    <Link className="lien" to={`/question/${formName}/${userId}/0`}>Commencer à répondre</Link>
+                    <Link className="lien" to={`/question/${formName}/${userId}/0`}>{texts.startButton}</Link>
                 </button>
                 {mainQuestions.map((question, index) => (
                     <div className='element_list' key={question.field_name}>
@@ -109,7 +113,7 @@ function QuestionList({resetUserId}) {
                 ))}
             </div>
             <div>
-                <a className="marge" href='/' onClick={handleContinueLater}>Continuer plus tard</a>
+                <a className="marge" href='/' onClick={handleContinueLater}>{texts.continueLater}</a>
             </div>
             {message && <p>{message}</p>}
             <ConfirmationModal

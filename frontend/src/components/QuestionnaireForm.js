@@ -4,12 +4,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './NavBar';
 import { AnswersContext } from './AnswersContext';
 import ConfirmationModal from './pop';
-import '../css/question.css';
+import { useLanguage } from './LangContext'; // Assurez-vous d'importer le contexte de langue
+import { translationsQuestionPage } from '../translations/translationQuestion'; // Importez les traductions spécifiques
 
-function QuestionPage({ userId, resetUserId}) {
+function QuestionPage({ userId, resetUserId }) {
   const { answers, setAnswers, completedForms, setCompletedForms } = useContext(AnswersContext);
   const { formName, questionIndex } = useParams();
   const navigate = useNavigate();
+  const { language } = useLanguage(); // Utilisez le contexte de langue
   const [questions, setQuestions] = useState([]);
   const [validFields, setValidFields] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(parseInt(questionIndex, 10) || 0);
@@ -29,12 +31,12 @@ function QuestionPage({ userId, resetUserId}) {
         setValidFields(fieldsResponse.data.map(field => field.original_field_name));
       } catch (error) {
         console.error('Error fetching data:', error);
-        setMessage('Erreur lors du chargement des données');
+        setMessage(translationsQuestionPage[language].loadingQuestions);
       }
     };
 
     fetchData();
-  }, [formName]);
+  }, [formName, language]);
 
   useEffect(() => {
     if (completedForms[formName]) {
@@ -54,13 +56,13 @@ function QuestionPage({ userId, resetUserId}) {
   };
 
   const handleSaveAndContinueLater = () => {
-    setModalMessage('Êtes-vous sûr de vouloir continuer plus tard ?');
+    setModalMessage(translationsQuestionPage[language].continueLaterMessage);
     setModalAction(() => saveAndContinueLater);
     setShowModal(true);
   };
 
   const handleFinish = () => {
-    setModalMessage('Avez-vous terminé ?');
+    setModalMessage(translationsQuestionPage[language].finishFormMessage);
     setModalAction(() => finishForm);
     setShowModal(true);
   };
@@ -96,7 +98,7 @@ function QuestionPage({ userId, resetUserId}) {
         console.error('Response status:', error.response.status);
         console.error('Response headers:', error.response.headers);
       }
-      setMessage("Erreur lors de l'enregistrement des réponses");
+      setMessage(translationsQuestionPage[language].loadingQuestions);
     }
     setShowModal(false);
   };
@@ -131,7 +133,7 @@ function QuestionPage({ userId, resetUserId}) {
         console.error('Response status:', error.response.status);
         console.error('Response headers:', error.response.headers);
       }
-      setMessage("Erreur lors de l'enregistrement des réponses");
+      setMessage(translationsQuestionPage[language].loadingQuestions);
     }
     setShowModal(false);
   };
@@ -214,7 +216,7 @@ function QuestionPage({ userId, resetUserId}) {
     }
   };
 
-  if (questions.length === 0) return <div>Chargement des questions...</div>;
+  if (questions.length === 0) return <div>{translationsQuestionPage[language].loadingQuestions}</div>;
 
   const currentQuestion = questions[currentQuestionIndex];
   const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
@@ -232,27 +234,27 @@ function QuestionPage({ userId, resetUserId}) {
           {renderQuestionInput(currentQuestion)}
         </div>
         <div className='doubleBouton'>
-          <button className='pButton' onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Question précédente</button>
+          <button className='pButton' onClick={handlePrevious} disabled={currentQuestionIndex === 0}>
+            {translationsQuestionPage[language].previousQuestion}
+          </button>
           <button className='sButton' onClick={handleNext}>
-            {currentQuestionIndex === questions.length - 1 ? 'Terminer' : 'Question suivante'}
+            {currentQuestionIndex === questions.length - 1 ? translationsQuestionPage[language].finish : translationsQuestionPage[language].nextQuestion}
           </button>
         </div>
-        
-    </div>
-    <div>
-        <a href='/' onClick={(e) => {
-          e.preventDefault();
-          handleSaveAndContinueLater();
-        }}>Continuer plus tard</a>
+        <div>
+          <a href='/' onClick={(e) => {
+            e.preventDefault();
+            handleSaveAndContinueLater();
+          }}>{translationsQuestionPage[language].continueLater}</a>
+        </div>
+        {message && <p>{message}</p>}
+        <ConfirmationModal
+          show={showModal}
+          message={modalMessage}
+          onConfirm={modalAction}
+          onCancel={() => setShowModal(false)}
+        />
       </div>
-      {message && <p>{message}</p>}
-
-      <ConfirmationModal
-        show={showModal}
-        message={modalMessage}
-        onConfirm={modalAction}
-        onCancel={() => setShowModal(false)}
-      />
     </div>
   );
 }

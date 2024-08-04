@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../css/navbar.css';
+import { useLanguage } from '../components/LangContext'; // Importez le contexte de langue
+import { translationsNavbar } from '../translations/translationNavbar'; // Importez les traductions spécifiques à Navbar
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { language } = useLanguage(); // Utilisez le contexte de langue
+  const texts = translationsNavbar[language]; // Obtenez les textes pour la barre de navigation
 
   const handleBack = () => {
     const path = location.pathname;
@@ -27,11 +31,11 @@ const Navbar = () => {
   return (
     <nav>
       <button onClick={handleBack}>
-        Retour
+        {texts.backButton}
       </button>
       <button>
         <Link to="/tuto">
-          Tuto
+          {texts.tutoButton}
         </Link>
       </button>
     </nav>

@@ -1,18 +1,21 @@
 import React from 'react';
+import { useLanguage } from '../components/LangContext'; // Assurez-vous que le chemin d'importation est correct
+import '../css/question.css'
 
-const LanguageSelector = ({ language, setLanguage }) => {
-    const handleLanguageChange = (lang) => {
-        setLanguage(lang);
-        console.log("Language changed to:", lang); // Ajoutez ce log pour déboguer
-      };
+const LanguageSelector = () => {
+  const { language, setLanguage } = useLanguage(); // Utilisez le contexte de langue
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'fr' ? 'en' : 'fr');
+  };
 
   return (
-    <div>
-      <button onClick={() => handleLanguageChange('fr')} disabled={language === 'fr'}>
-        Français
-      </button>
-      <button onClick={() => handleLanguageChange('en')} disabled={language === 'en'}>
-        English
+    <div className="language-selector">
+      <button
+        className="languageButton"
+        onClick={toggleLanguage}
+      >
+        {language === 'fr' ? 'Switch to English' : 'Passer au Français'}
       </button>
     </div>
   );
