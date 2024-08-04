@@ -97,11 +97,11 @@ const FormSelection = ({ userId, resetUserId }) => {
       <div className='nav'>
         <div></div>
         <div>
-          <button>Tuto</button>
+          <button><Link className='nodeco' to={`/tuto`}>Tuto</Link></button>
         </div>
       </div>
       <div className="centre">
-        <h2>Choisissez un formulaire</h2>
+        <h2>Choisis un formulaire</h2>
         <div>
           <button className='element_list'>
             <Link className='nodeco' to={`/questions/Form1/${userId}`}>

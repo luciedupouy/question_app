@@ -47,7 +47,7 @@ function Login({ onSuccessfulLogin, language, setLanguage }) {
             <div className="centre">
                 <h1>Bienvenue !</h1>
                 <h2>S'identifier</h2>
-                <p>Entrez un email pour répondre au questionnaire</p>
+                <p>Entre un email pour répondre au questionnaire</p>
                 <form onSubmit={handleSubmit}>
                 <div>
                     <input className='input' type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom' required/>
