@@ -6,7 +6,7 @@ import { AnswersContext } from './AnswersContext';
 import ConfirmationModal from './pop';
 import '../css/question.css';
 
-function QuestionPage({ userId, resetUserId, language}) {
+function QuestionPage({ userId, resetUserId}) {
   const { answers, setAnswers, completedForms, setCompletedForms } = useContext(AnswersContext);
   const { formName, questionIndex } = useParams();
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function QuestionPage({ userId, resetUserId, language}) {
     const fetchData = async () => {
       try {
         const [questionsResponse, fieldsResponse] = await Promise.all([
-          axios.get(`http://127.0.0.1:5000/get_questions/${formName}?lang=${language}`),
+          axios.get(`http://127.0.0.1:5000/get_questions/${formName}?`),
           axios.get('http://127.0.0.1:5000/get_valid_fields')
         ]);
         setQuestions(questionsResponse.data);
@@ -34,7 +34,7 @@ function QuestionPage({ userId, resetUserId, language}) {
     };
 
     fetchData();
-  }, [formName, language]);
+  }, [formName]);
 
   useEffect(() => {
     if (completedForms[formName]) {

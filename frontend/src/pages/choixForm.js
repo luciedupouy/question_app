@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
 import axios from 'axios';
-import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
+import ConfirmationModal from '../components/pop'; 
 import '../css/question.css';
 
 const FormSelection = ({ userId, resetUserId }) => {

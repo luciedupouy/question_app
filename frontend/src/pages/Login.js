@@ -2,11 +2,10 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AnswersContext } from '../components/AnswersContext';
-import LanguageSelector from '../components/LangageSelector';
 import '../css/question.css'
 
 
-function Login({ onSuccessfulLogin, language, setLanguage }) {
+function Login({ onSuccessfulLogin }) {
     const { resetAnswers, resetCompletedForms } = useContext(AnswersContext);
     const [nom, setNom] = useState('');
     const [prNom, setPrNom] = useState('');

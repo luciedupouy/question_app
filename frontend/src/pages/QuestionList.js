@@ -6,7 +6,7 @@ import '../css/question.css';
 import Navbar from '../components/NavBar';
 import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin vers le fichier
 
-function QuestionList({resetUserId, language}) {
+function QuestionList({resetUserId}) {
     const { formName, userId } = useParams();
     const { answers, setCompletedForms } = useContext(AnswersContext);
     const [questions, setQuestions] = useState([]);
@@ -21,7 +21,7 @@ function QuestionList({resetUserId, language}) {
         const fetchData = async () => {
             try {
                 const [questionsResponse, fieldsResponse] = await Promise.all([
-                    axios.get(`http://localhost:5000/get_questions/${formName}?lang=${language}`),
+                    axios.get(`http://localhost:5000/get_questions/${formName}?`),
                     axios.get('http://localhost:5000/get_valid_fields')
                 ]);
                 setQuestions(questionsResponse.data);
@@ -32,7 +32,7 @@ function QuestionList({resetUserId, language}) {
         };
 
         fetchData();
-    }, [formName, language]);
+    }, [formName]);
 
     const mainQuestions = questions.filter(q => q.field_type !== 'notes');
 

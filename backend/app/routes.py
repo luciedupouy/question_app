@@ -98,27 +98,21 @@ def update():
         
 @main.route('/get_questions/<form_name>', methods=['GET'])
 def get_questions(form_name):
-    language = request.args.get('lang', 'fr')  # 'fr' par défaut si non spécifié
-
     payload = {
         'token': '7FEF0B870961D07ED061AE440B1B314C',
         'content': 'metadata',
         'format': 'json',
-        'forms[0]': form_name,
-        'returnFormat': 'json',
-        'lang': language  # Ajoutez le paramètre de langue ici
+        'forms[0]': form_name,  # Utilisez le nom du formulaire dynamique
+        'returnFormat': 'json'
     }
-
     response = requests.post('https://redcap.cemtl.rtss.qc.ca/redcap/api/', data=payload)
-
     if response.status_code == 200:
         questions = json.loads(response.text)
         excluded_fields = ['id', 'nom', 'pr_nom', 'mail', 'avis']
-        
         filtered_questions = [
             {
                 'field_name': q['field_name'],
-                'field_label': q.get('field_label', ''),
+                'field_label': q['field_label'],
                 'field_type': q['field_type'],
                 'select_choices_or_calculations': q.get('select_choices_or_calculations', '')
             }

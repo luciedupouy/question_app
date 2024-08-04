@@ -1,9 +1,8 @@
-// src/pages/LongAnswerPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Importer useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import '../css/question.css';
-import ConfirmationModal from '../components/pop'; // Assurez-vous du bon chemin
+import ConfirmationModal from '../components/pop'; 
 
 function LongAnswerPage({ userId, resetUserId}) {
     const [question, setQuestion] = useState(null);
@@ -12,7 +11,7 @@ function LongAnswerPage({ userId, resetUserId}) {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [actionType, setActionType] = useState('');
-    const navigate = useNavigate(); // Initialiser useNavigate
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchQuestion = async () => {

@@ -11,7 +11,6 @@ import { AnswersProvider } from './components/AnswersContext';
 
 function App() {
     const [userId, setUserId] = useState(null);
-    const [language, setLanguage] = useState('fr'); // Default language is French
 
     const resetUserId = useCallback(() => {
       setUserId(null);
@@ -22,10 +21,10 @@ function App() {
         <AnswersProvider>
           <Routes>
             <Route path="/" element={
-              userId ? <Navigate to="/tuto" replace /> : <Login onSuccessfulLogin={setUserId} language={language} setLanguage={setLanguage} />
+              userId ? <Navigate to="/tuto" replace /> : <Login onSuccessfulLogin={setUserId} />
             } />
             <Route path="/continuer" element={
-              userId ? <Navigate to="/form-selection" replace/> : <Identification onSuccessfulIdentification={setUserId} language={language} setLanguage={setLanguage}/>
+              userId ? <Navigate to="/form-selection" replace/> : <Identification onSuccessfulIdentification={setUserId} />
             } />
             <Route path="/tuto" element={
               userId ? <Tuto userId={userId} /> : <Navigate to="/" replace />
@@ -34,10 +33,10 @@ function App() {
               userId ? <FormSelect userId={userId} resetUserId={resetUserId}/> : <Navigate to="/" replace />
             } />
             <Route path="/questions/:formName/:userId" element={
-              userId ? <QuestionList userId={userId} resetUserId={resetUserId} language={language}/> : <Navigate to="/" replace />
+              userId ? <QuestionList userId={userId} resetUserId={resetUserId} /> : <Navigate to="/" replace />
             } />
             <Route path="/question/:formName/:userId/:questionIndex" element={
-              userId ? <QuestionPage userId={userId} resetUserId={resetUserId} language={language}/> : <Navigate to="/" replace />
+              userId ? <QuestionPage userId={userId} resetUserId={resetUserId} /> : <Navigate to="/" replace />
             } />
             <Route path="/long-answer" element={
               userId ? <DernierePage userId={userId} resetUserId={resetUserId} /> : <Navigate to="/" replace />
