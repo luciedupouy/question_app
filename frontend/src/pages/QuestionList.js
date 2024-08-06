@@ -51,7 +51,7 @@ function QuestionList({ resetUserId }) {
 
             console.log("Données envoyées :", { id: userId, ...validAnswers });
 
-            const response = await axios.post('http://localhost:5000/update', {
+            const response = await axios.post(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/update', {
                 id: userId,
                 ...validAnswers
             });
