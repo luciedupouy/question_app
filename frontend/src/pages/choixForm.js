@@ -40,7 +40,7 @@ const FormSelection = ({ userId, resetUserId }) => {
 
   const saveAndContinueLater = async () => {
     try {
-      const validFieldsResponse = await axios.get('http://localhost:5000/get_valid_fields');
+      const validFieldsResponse = await axios.get(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/get_valid_fields');
       const validFields = validFieldsResponse.data.map(field => field.original_field_name);
 
       const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
@@ -52,7 +52,7 @@ const FormSelection = ({ userId, resetUserId }) => {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
-      const response = await axios.post('http://localhost:5000/update', {
+      const response = await axios.post(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/update', {
         id: userId,
         ...validAnswers
       });
@@ -74,7 +74,7 @@ const FormSelection = ({ userId, resetUserId }) => {
 
   const finishForm = async () => {
     try {
-      const validFieldsResponse = await axios.get('http://localhost:5000/get_valid_fields');
+      const validFieldsResponse = await axios.get(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/get_valid_fields');
       const validFields = validFieldsResponse.data.map(field => field.original_field_name);
 
       const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
@@ -86,7 +86,7 @@ const FormSelection = ({ userId, resetUserId }) => {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
-      const response = await axios.post('http://localhost:5000/update', {
+      const response = await axios.post(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/update', {
         id: userId,
         ...validAnswers
       });

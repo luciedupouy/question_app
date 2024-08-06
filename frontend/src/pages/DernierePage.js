@@ -20,7 +20,7 @@ function LongAnswerPage({ userId, resetUserId }) {
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:5000/get_long_answer_question');
+                const response = await axios.get(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/get_long_answer_question');
                 setQuestion(response.data);
             } catch (error) {
                 console.error('Erreur lors de la récupération de la question:', error);
@@ -40,7 +40,7 @@ function LongAnswerPage({ userId, resetUserId }) {
 
     const handleConfirmSubmit = async () => {
         try {
-            await axios.post('http://127.0.0.1:5000/submit_long_answer', {
+            await axios.post(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/submit_long_answer', {
                 id: userId,
                 field_name: question.field_name,
                 answer: answer

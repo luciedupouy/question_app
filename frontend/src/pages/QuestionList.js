@@ -25,8 +25,8 @@ function QuestionList({ resetUserId }) {
         const fetchData = async () => {
             try {
                 const [questionsResponse, fieldsResponse] = await Promise.all([
-                    axios.get(`http://localhost:5000/get_questions/${formName}?`),
-                    axios.get('http://localhost:5000/get_valid_fields')
+                    axios.get(` https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/get_questions/${formName}?`),
+                    axios.get(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/get_valid_fields')
                 ]);
                 setQuestions(questionsResponse.data);
                 setValidFields(fieldsResponse.data.map(field => field.original_field_name));

@@ -21,12 +21,12 @@ function Identification({ onSuccessfulIdentification }) {
   
     try {
       console.log('Sending data:', { email, id });
-      const checkResponse = await axios.post('http://127.0.0.1:5000/check_identity', { email, id });
+      const checkResponse = await axios.post(' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/check_identity', { email, id });
       
       if (checkResponse.status === 200) {
         console.log('Identity verified, fetching answers');
         try {
-          const answersResponse = await axios.get(`http://127.0.0.1:5000/get_answers/${id}`);
+          const answersResponse = await axios.get(` https://backend-qy7g4owzg-luciedupouys-projects.vercel.app/get_answers/${id}`);
           console.log('Answers received:', answersResponse.data);
           if (Object.keys(answersResponse.data).length > 0) {
             setAnswers(answersResponse.data);
