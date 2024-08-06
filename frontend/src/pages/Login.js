@@ -20,7 +20,11 @@ function Login({ onSuccessfulLogin }) {
         resetCompletedForms();
         event.preventDefault();
         try {
+<<<<<<< HEAD
             const response = await axios.post('https://backend-flax-theta.vercel.app//submit', {
+=======
+            const response = await axios.post(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//submit', {
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
                 nom,
                 pr_nom: prNom,
                 mail

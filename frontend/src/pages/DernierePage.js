@@ -20,7 +20,11 @@ function LongAnswerPage({ userId, resetUserId }) {
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
+<<<<<<< HEAD
                 const response = await axios.get('https://backend-flax-theta.vercel.app//get_long_answer_question');
+=======
+                const response = await axios.get(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//get_long_answer_question');
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
                 setQuestion(response.data);
             } catch (error) {
                 console.error('Erreur lors de la récupération de la question:', error);
@@ -40,7 +44,11 @@ function LongAnswerPage({ userId, resetUserId }) {
 
     const handleConfirmSubmit = async () => {
         try {
+<<<<<<< HEAD
             await axios.post('https://backend-flax-theta.vercel.app//submit_long_answer', {
+=======
+            await axios.post(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//submit_long_answer', {
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
                 id: userId,
                 field_name: question.field_name,
                 answer: answer
