@@ -40,7 +40,11 @@ const FormSelection = ({ userId, resetUserId }) => {
 
   const saveAndContinueLater = async () => {
     try {
+<<<<<<< HEAD
       const validFieldsResponse = await axios.get('https://backend-flax-theta.vercel.app//get_valid_fields');
+=======
+      const validFieldsResponse = await axios.get(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//get_valid_fields');
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
       const validFields = validFieldsResponse.data.map(field => field.original_field_name);
 
       const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
@@ -52,7 +56,11 @@ const FormSelection = ({ userId, resetUserId }) => {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
+<<<<<<< HEAD
       const response = await axios.post('https://backend-flax-theta.vercel.app//update', {
+=======
+      const response = await axios.post(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//update', {
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
         id: userId,
         ...validAnswers
       });
@@ -74,7 +82,11 @@ const FormSelection = ({ userId, resetUserId }) => {
 
   const finishForm = async () => {
     try {
+<<<<<<< HEAD
       const validFieldsResponse = await axios.get('https://backend-flax-theta.vercel.app//get_valid_fields');
+=======
+      const validFieldsResponse = await axios.get(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//get_valid_fields');
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
       const validFields = validFieldsResponse.data.map(field => field.original_field_name);
 
       const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
@@ -86,7 +98,11 @@ const FormSelection = ({ userId, resetUserId }) => {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
+<<<<<<< HEAD
       const response = await axios.post('https://backend-flax-theta.vercel.app//update', {
+=======
+      const response = await axios.post(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//update', {
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
         id: userId,
         ...validAnswers
       });

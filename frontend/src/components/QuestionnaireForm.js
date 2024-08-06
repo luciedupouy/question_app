@@ -24,8 +24,13 @@ function QuestionPage({ userId, resetUserId }) {
     const fetchData = async () => {
       try {
         const [questionsResponse, fieldsResponse] = await Promise.all([
+<<<<<<< HEAD
           axios.get(`https://backend-flax-theta.vercel.app//${formName}?`),
           axios.get('https://backend-flax-theta.vercel.app//get_valid_fields')
+=======
+          axios.get(`https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//${formName}?`),
+          axios.get('https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//get_valid_fields')
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
         ]);
         setQuestions(questionsResponse.data);
         setValidFields(fieldsResponse.data.map(field => field.original_field_name));
@@ -78,7 +83,11 @@ function QuestionPage({ userId, resetUserId }) {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
+<<<<<<< HEAD
       const response = await axios.post('https://backend-flax-theta.vercel.app//update', {
+=======
+      const response = await axios.post('https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//update', {
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
         id: userId,
         ...validAnswers
       });
@@ -114,7 +123,11 @@ function QuestionPage({ userId, resetUserId }) {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
+<<<<<<< HEAD
       const response = await axios.post('https://backend-flax-theta.vercel.app//update', {
+=======
+      const response = await axios.post(' https://backend-pntjk8nqq-luciedupouys-projects.vercel.app//update', {
+>>>>>>> 85ba27393373d5e683434cf10e03d1864982cde0
         id: userId,
         ...validAnswers
       });
