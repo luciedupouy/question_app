@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: ' https://backend-qy7g4owzg-luciedupouys-projects.vercel.app', // Assurez-vous que cela correspond à l'URL de votre backend
+  baseURL: 'https://backend-pntjk8nqq-luciedupouys-projects.vercel.app/', // Assurez-vous que cela correspond à l'URL de votre backend
 });
 
 export const submitQuestionnaire = async (data) => {
