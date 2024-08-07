@@ -74,7 +74,7 @@ const FormSelection = ({ userId, resetUserId }) => {
 
   const finishForm = async () => {
     try {
-      const validFieldsResponse = await axios.get('https://question-app-4iey.vercel.app//get_valid_fields');
+      const validFieldsResponse = await axios.get('https://question-app-4iey.vercel.app/get_valid_fields');
       const validFields = validFieldsResponse.data.map(field => field.original_field_name);
 
       const validAnswers = Object.entries(answers).reduce((acc, [key, value]) => {
