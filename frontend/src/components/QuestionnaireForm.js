@@ -24,8 +24,8 @@ function QuestionPage({ userId, resetUserId }) {
     const fetchData = async () => {
       try {
         const [questionsResponse, fieldsResponse] = await Promise.all([
-          axios.get(`https://backend-flax-theta.vercel.app/get_questions/${formName}?`),
-          axios.get('https://backend-flax-theta.vercel.app/get_valid_fields')
+          axios.get(`https://question-app-wine.vercel.app/get_questions/${formName}?`),
+          axios.get('https://question-app-wine.vercel.app/get_valid_fields')
         ]);
         setQuestions(questionsResponse.data);
         setValidFields(fieldsResponse.data.map(field => field.original_field_name));
@@ -78,7 +78,7 @@ function QuestionPage({ userId, resetUserId }) {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
-      const response = await axios.post('https://backend-flax-theta.vercel.app/update', {
+      const response = await axios.post('https://question-app-wine.vercel.app/update', {
         id: userId,
         ...validAnswers
       });
@@ -114,7 +114,7 @@ function QuestionPage({ userId, resetUserId }) {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
-      const response = await axios.post('https://backend-flax-theta.vercel.app/update', {
+      const response = await axios.post('https://question-app-wine.vercel.app/update', {
         id: userId,
         ...validAnswers
       });
