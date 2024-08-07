@@ -13,6 +13,8 @@ function Tuto({ userId }) {
             <div className="centre2">
                 <h1>{texts.title}</h1>
                 <p>{texts.idMessage.replace('{userId}', userId)}</p>
+                <p>{texts.tuto}</p>
+                <p>{texts.courage}</p>
                 <button className='loginButton'>
                     <Link className="lien" to={`/form-selection/`} >
                         {texts.startButton}
