@@ -86,7 +86,7 @@ const FormSelection = ({ userId, resetUserId }) => {
 
       console.log("Données envoyées :", { id: userId, ...validAnswers });
 
-      const response = await axios.post('https://question-app-4iey.vercel.app//update', {
+      const response = await axios.post('https://question-app-4iey.vercel.app/update', {
         id: userId,
         ...validAnswers
       });
