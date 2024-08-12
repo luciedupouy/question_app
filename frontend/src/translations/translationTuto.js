@@ -10,7 +10,7 @@ export const translationsTuto = {
     },
     fr: {
       title: "Tuto",
-      idMessage: "Votre identifiant est le {userId}, garde le précieusement pour vous identifier la prochaine fois.",
+      idMessage: "Ton identifiant est le {userId}, garde le précieusement pour t'identifier la prochaine fois.",
       startButton: "Démarrer le questionnaire",
       continueLater: "Continuer plus tard",
       tuto: "Tu trouveras deux questionnaires indépendants auxquels tu devras répondre. Le premier contient 110 questions à choix multiples et le deuxième 80 questions à choix multiple aussi. Tu as la possibilité de le faire en plusieurs fois en cliquant sur le bouton 'Continuer plus tard'. Il te suffira de te reconnecter avec l'identifiant mentionné au dessus et que tu recevras aussi par mail. ",
