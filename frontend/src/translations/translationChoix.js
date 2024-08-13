@@ -9,8 +9,8 @@ export const translationsFormSelection = {
       continueLater: "Continue Later",
     },
     fr: {
-      chooseForm: "Choisis un formulaire",
-      finish: "As-tu terminé ?",
+      chooseForm: "Choisissez un formulaire",
+      finish: "Avez-vous terminé ?",
       saveAndContinueLater: "Continuer plus tard",
       formLabel: "Questionnaire",
       finishedForm: "✔️",
