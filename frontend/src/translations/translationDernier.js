@@ -16,7 +16,7 @@ export const translationsLongAnswerPage = {
     },
     fr: {
       loadingQuestion: "Chargement de la question...",
-      thankYou: "Merci pour tes réponses ! Tu as terminé.",
+      thankYou: "Merci pour vous réponses ! Vous avez terminé.",
       questionLabel: "Question à réponse longue",
       placeholder: "Commentaires",
       submit: "Envoyer",
@@ -26,7 +26,7 @@ export const translationsLongAnswerPage = {
       submitSuccess: "Réponse soumise avec succès",
       submitError: "Erreur lors de la soumission de la réponse",
       fetchError: "Erreur lors du chargement de la question",
-      question:"Tu peux faire des commentaires ur l'interface du questionnaire, si tu le souhaites."
+      question:"Vous pouvez faire des commentaires sur l'interface du questionnaire, si vous le souhaitez."
     }
   };
   

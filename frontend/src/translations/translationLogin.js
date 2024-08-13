@@ -13,7 +13,7 @@ export const translations = {
     fr: {
       welcome: "Bienvenue !",
       signIn: "S'identifier",
-      enterEmail: "Entre un email pour répondre au questionnaire",
+      enterEmail: "Entrez un email pour répondre au questionnaire",
       firstNamePlaceholder: "Prénom",
       lastNamePlaceholder: "Nom",
       emailPlaceholder: "email@domain.com",

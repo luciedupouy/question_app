@@ -10,9 +10,9 @@ export const translationsId = {
       createAccountLink: "Create an account",
     },
     fr: {
-      welcomeBack: "Tu es de retour !",
+      welcomeBack: "Vous êtes de retour !",
       signIn: "S'identifier",
-      enterId: "Entre ton identifiant pour te connecter",
+      enterId: "Entrez votre identifiant pour vous connecter",
       emailPlaceholder: "email@domain.com",
       idPlaceholder: "Identifiant",
       signInButton: "S'identifier avec un email",
