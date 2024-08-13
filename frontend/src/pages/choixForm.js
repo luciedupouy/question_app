@@ -131,7 +131,7 @@ const FormSelection = ({ userId, resetUserId }) => {
             </button>
           ))}
           <div className='termine'>
-            <button className='loginButton' onClick={handleFinish}>{texts.finish}</button>
+            <button className='loginButton' onClick={handleFinish}>{texts.finishButton}</button>
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@ const FormSelection = ({ userId, resetUserId }) => {
         <a href='/' onClick={(e) => {
           e.preventDefault();
           handleSaveAndContinueLater();
-        }}>{texts.saveAndContinueLater}</a>
+        }}>{texts.continueLater}</a>
       </div>
       {message && <p>{message}</p>}
 

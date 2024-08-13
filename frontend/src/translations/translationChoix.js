@@ -3,18 +3,20 @@ export const translationsFormSelection = {
     en: {
       chooseForm: "Choose a form",
       finish: "Are you finish?",
-      saveAndContinueLater: "Save and Continue Later",
+      saveAndContinueLater: "Are you sure you want to continue later?",
       formLabel: "Questionnaire",
       finishedForm: "✔️",
       continueLater: "Continue Later",
+      finishButton: "Finish"
     },
     fr: {
       chooseForm: "Choisissez un formulaire",
       finish: "Avez-vous terminé ?",
-      saveAndContinueLater: "Continuer plus tard",
+      saveAndContinueLater: "Êtes-vous sûr de vouloir continuer plus tard ?",
       formLabel: "Questionnaire",
       finishedForm: "✔️",
       continueLater: "Continuer plus tard",
+      finishButton: "Terminer"
     }
   };
   
